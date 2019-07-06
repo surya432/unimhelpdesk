@@ -3,7 +3,8 @@
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
-
+use App\User;
+use Spatie\Permission\Models\Role;
 
 class PermissionTableSeeder extends Seeder
 {
@@ -20,10 +21,16 @@ class PermissionTableSeeder extends Seeder
             'role-edit',
             'role-delete',
         ];
+        $user = User::create(['name'=>"Admin", 'email' => "admin@admin.com",'password'=> Hash::make("admin123")]);
+        $role = Role::create([ 'SuperAdmin', 'guard_name' => 'web']);
+        $role = Role::findByName('SuperAdmin');
+        $user->assignRole($role->id);
 
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::create(['name' => $permission, 'guard_name'=>'web']);
+            $role->givePermissionTo( $permission);
+
         }
     }
 }
