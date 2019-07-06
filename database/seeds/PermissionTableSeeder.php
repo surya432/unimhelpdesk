@@ -20,6 +20,15 @@ class PermissionTableSeeder extends Seeder
             'role-create',
             'role-edit',
             'role-delete',
+            'user-list',
+            'user-create',
+            'user-edit',
+            'user-delete',
+            'permission-list',
+            'permission-create',
+            'permission-edit',
+            'permission-delete',
+            
         ];
         $user = User::create(['name'=>"Admin", 'email' => "admin@admin.com",'password'=> Hash::make("admin123")]);
         $role = Role::create([ 'SuperAdmin', 'guard_name' => 'web']);
