@@ -38,17 +38,18 @@ class TiketController extends Controller
                 ->join('content_tikets', 'content_tikets.id', 'tikets.id')
                 ->join('departements', 'departements.id', 'tikets.departement_id')
                 ->join('statuses', 'statuses.id', 'tikets.status_id')
-                ->join( 'prioritas', 'prioritas.id', 'tikets.status_id')
+                ->join('prioritas', 'prioritas.id', 'tikets.status_id')
                 ->where('tikets.user_id', $request->user()->id)
-                ->select( 'tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
-                ->orderBy( 'tikets.id', 'DESC')->get();
+                ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
+                ->orderBy('tikets.id', 'DESC')->get();
         } else if ($request->user()->hasRole("SuperAdmin")) {
             $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
                 ->join('content_tikets', 'content_tikets.id', 'tikets.id')
                 ->join('departements', 'departements.id', 'tikets.departement_id')
                 ->join('statuses', 'statuses.id', 'tikets.status_id')
+                ->join('prioritas', 'prioritas.id', 'tikets.status_id')
                 ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
-                ->orderBy( 'tikets.id', 'DESC')->get();
+                ->orderBy('tikets.id', 'DESC')->get();
         } else {
             $departementId = Role::where('name', $request->user()->getRoleNames())->get();
             //dd($departementId['0']);
@@ -56,10 +57,11 @@ class TiketController extends Controller
                 ->join('content_tikets', 'content_tikets.id', 'tikets.id')
                 ->join('departements', 'departements.id', 'tikets.departement_id')
                 ->join('statuses', 'statuses.id', 'tikets.status_id')
-                ->join( 'content_tikets', 'content_tikets.tiket_id', 'tikets.id')
+                ->join('content_tikets', 'content_tikets.tiket_id', 'tikets.id')
+                ->join('prioritas', 'prioritas.id', 'tikets.status_id')
                 ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->where('tikets.departement_id', $departementId['0']['id'])
-                ->orderBy( 'tikets.id', 'DESC')->get();
+                ->orderBy('tikets.id', 'DESC')->get();
         }
         //$data = array_merge($data, \App\Content_tiket::where('tiket_id', $data));
 
