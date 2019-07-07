@@ -29,7 +29,7 @@ class LoginController extends Controller
             $success['token'] =  $dataUser->createToken(request('email'))->accessToken;
             return response()->json(["status" => "success", 'error' => "", 'data' => $success]);
         } else {
-            return response()->json([ "status" => "failed", 'error' => 'Unauthorised','data'=>"[]"], 401);
+            return response()->json([ "status" => "failed", 'error' => 'Unauthorised','data'=>"[]"], 404);
         }
     }
 
