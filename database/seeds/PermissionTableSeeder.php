@@ -31,7 +31,7 @@ class PermissionTableSeeder extends Seeder
             
         ];
         $user = User::create(['name'=>"Admin", 'email' => "admin@admin.com",'password'=> Hash::make("admin123")]);
-        $role = Role::create([ 'SuperAdmin', 'guard_name' => 'web']);
+        $role = Role::create([ "name"=>'SuperAdmin', 'guard_name' => 'web']);
         $role = Role::findByName('SuperAdmin');
         $user->assignRole($role->id);
 
