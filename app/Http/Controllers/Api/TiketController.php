@@ -59,7 +59,6 @@ class TiketController extends Controller
                 ->select('tikets.*', 'users.name as userName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->where('tikets.departement_id', $departementId['0']['id'])
                 ->orderBy( 'tikets.id', 'DESC')->get();
-
         }
         //$data = array_merge($data, \App\Content_tiket::where('tiket_id', $data));
 

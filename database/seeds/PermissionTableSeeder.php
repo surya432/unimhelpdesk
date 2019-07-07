@@ -28,6 +28,8 @@ class PermissionTableSeeder extends Seeder
             'permission-create',
             'permission-edit',
             'permission-delete',
+            'page-list',
+            'master-list',
             
         ];
         $user = User::create(['name'=>"Admin", 'email' => "admin@admin.com",'password'=> Hash::make("admin123")]);

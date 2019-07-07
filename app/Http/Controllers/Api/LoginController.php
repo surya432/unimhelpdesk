@@ -27,7 +27,7 @@ class LoginController extends Controller
                 $success['avatar'] = $b64image;
             }
             $success['token'] =  $dataUser->createToken(request('email'))->accessToken;
-            return response()->json(["status" => "success", 'data' => $success]);
+            return response()->json(["status" => "success", 'error' => null, 'data' => $success]);
         } else {
             return response()->json([ "status" => "failed", 'error' => 'Unauthorised'], 401);
         }
