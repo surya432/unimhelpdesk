@@ -29,6 +29,8 @@ class TiketController extends Controller
             case "tiketContent":
                 return response()->json(["status" => "success", 'data' => \App\Content_tiket::all()]);
                 break;
+            default:
+                return response()->json(["status" => "failed", 'data' => "null"], 404);
         }
     }
     private function getDataTiket($request)
