@@ -17,6 +17,7 @@
         "laravelcollective/html": "^5.8",
         "laravolt/avatar": "^2.2",
         "spatie/laravel-permission": "^2.37",
+        "symfony/process": "^4.3",
         "unisharp/laravel-ckeditor": "^4.7",
         "unisharp/laravel-filemanager": "dev-master",
         "yajra/laravel-datatables-oracle": "^9.4"

@@ -243,6 +243,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Avatar' => Laravolt\Avatar\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'deploy_secret' => env('APP_DEPLOY_SECRET'),
 
     ],
 
