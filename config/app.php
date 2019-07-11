@@ -187,7 +187,6 @@ return [
         Laravolt\Avatar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
-
     ],
 
     /*
