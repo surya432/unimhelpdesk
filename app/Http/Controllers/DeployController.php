@@ -20,7 +20,7 @@ class DeployController extends Controller
             $localToken,
             false
         );
-
+return $localHash;
         if (hash_equals($githubHash, $localHash)) {
             $root_path = base_path();
             $process =
