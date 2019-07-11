@@ -17,7 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::post('deploy', 'DeployController@deploy');
-Route::get('deploy', 'DeployController@deploy');
 
 Route::group(['middleware' => [ 'web', 'auth']], function () {
     Route::get('/admin', 'HomeController@index')->name('home');
