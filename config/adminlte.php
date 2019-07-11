@@ -152,12 +152,6 @@ return [
                     'can' => 'permission-list',
 
                 ], [
-                    'text' => 'Master Departement',
-                    'url'  => 'admin/master/departement',
-                    'icon' => 'lock',
-                    'can' => 'departement-list',
-
-                ], [
                     'text' => 'Master Status',
                     'url'  => 'admin/master/status',
                     'icon' => 'lock',

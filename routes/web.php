@@ -17,7 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::post('deploy', 'DeployController@deploy');
-
 Route::group(['middleware' => [ 'web', 'auth']], function () {
     Route::get('/admin', 'HomeController@index')->name('home');
     Route::get('/laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
@@ -29,12 +28,10 @@ Route::group(['middleware' => [ 'web', 'auth']], function () {
         Route::resource('permission', 'PermissionController');
         Route::resource('prioritas', 'PrioritasController');
         Route::resource('status', 'StatusController');
-
     });
     Route::prefix('/admin/page')->group(function () {
         Route::resource('tiket', 'TiketController');
         Route::post('tiket/$id', 'TiketController@replyTiket')->name( 'tiket.replyTiket');
-
     });
     Route::prefix('/admin/ajax/master/')->group(function () {
         Route::get('users', 'UserController@getDataMaster')->name('ajax.master.users');
