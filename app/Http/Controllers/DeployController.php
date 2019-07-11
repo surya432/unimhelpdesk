@@ -12,7 +12,7 @@ class DeployController extends Controller
     public function deploy(Request $request)
     {
 
-        $githubPayload = $request->getContent();
+        $githubPayload = file_get_contents('php://input');
         $githubHash = $request->header('X-Hub-Signature');
         $localToken = config('app.deploy_secret');
         $localHash = 'sha1=' . hash_hmac(
