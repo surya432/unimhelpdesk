@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Symfony\Component\Process\Process;
+
 use Illuminate\Http\Request;
 
 class DeployController extends Controller
@@ -18,7 +20,7 @@ class DeployController extends Controller
             $localToken,
             false
         );
-        
+
         if (hash_equals($githubHash, $localHash)) {
             $root_path = base_path();
             $process =
