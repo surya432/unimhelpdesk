@@ -27,14 +27,14 @@ class TiketController extends Controller
                 return response()->json(["status" => "success", 'data' => $this->getDataTiket($request), 'total' => \App\Tiket::where('user_id', $request->user()->id)->count()]);
                 break;
             case "tiketContent":
-                return response()->json(["status" => "success", 'data' => ;
+                return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('tiket_id',$request->input("tiketId"))])->join('attachment', "content_tikets.id",);
                 break;
             default:
                 return response()->json(["status" => "failed", 'data' => "null"], 404);
         }
     }
     private function getTiketBody($request){
-\App\Content_tiket::where('tiket_id',$request->input("tiketId"))])
+        
     }
     private function getDataTiket($request)
     {
@@ -47,7 +47,6 @@ class TiketController extends Controller
                 ->where('tikets.user_id', $request->user()->id)
                 ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->orderBy('tikets.id', 'DESC')->get();
-            $data['body'] = "nukk";
 
         } else if ($request->user()->hasRole("SuperAdmin")) {
             $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
@@ -57,7 +56,6 @@ class TiketController extends Controller
                 ->join('prioritas', 'prioritas.id', 'tikets.status_id')
                 ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->orderBy('tikets.id', 'DESC')->get();
-                $data['body']= "nukk";
         } else {
             $departementId = Role::where('name', $request->user()->getRoleNames())->get();
             //dd($departementId['0']);
@@ -70,11 +68,14 @@ class TiketController extends Controller
                 ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->where('tikets.departement_id', $departementId['0']['id'])
                 ->orderBy('tikets.id', 'DESC')->get();
-            $data['body'] = "nukk";
 
         }
         //$data = array_merge($data, \App\Content_tiket::where('tiket_id', $data));
-        return count($data);
+            $bodyTiket['bodyTiket'] = \App\Content_tiket::where('tiket_id',$request->input("tiketId"));
+            array_marge($data,$bodyTiket);  
+       
+            return $data;
+        
     }
     public function create(Request $request){
         // $request->validate($request, [
