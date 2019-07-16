@@ -27,7 +27,7 @@ class TiketController extends Controller
                 return response()->json(["status" => "success", 'data' => $this->getDataTiket($request), 'total' => \App\Tiket::where('user_id', $request->user()->id)->count()]);
                 break;
             case "tiketContent":
-            
+
                 return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('tiket_id',$request->input("tiketId"))]);
                 break;
             default:
@@ -71,16 +71,16 @@ class TiketController extends Controller
         return $data;
     }
     public function create(Request $request){
-        $request->validate($request, [
-            'subject' => 'required',
-            'body' => 'required',
-            'prioritas_id' => 'required',
-            'user_id' => 'required',
-            'status_id' => 'required',
-            'departement_id' => 'required',
-            'senders' => 'required',
-            'attachment' => 'max:5000',
-        ]);
+        // $request->validate($request, [
+        //     'subject' => 'required',
+        //     'body' => 'required',
+        //     'prioritas_id' => 'required',
+        //     'user_id' => 'required',
+        //     'status_id' => 'required',
+        //     'departement_id' => 'required',
+        //     'senders' => 'required',
+        //     'attachment' => 'max:5000',
+        // ]);
         $tiket = \App\Tiket::create($request->only('subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id'));
         $content = new \App\Content_tiket;
         $content->body = $request->input('body');
