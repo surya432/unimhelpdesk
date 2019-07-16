@@ -27,12 +27,14 @@ class TiketController extends Controller
                 return response()->json(["status" => "success", 'data' => $this->getDataTiket($request), 'total' => \App\Tiket::where('user_id', $request->user()->id)->count()]);
                 break;
             case "tiketContent":
-
-                return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('tiket_id',$request->input("tiketId"))]);
+                return response()->json(["status" => "success", 'data' => ;
                 break;
             default:
                 return response()->json(["status" => "failed", 'data' => "null"], 404);
         }
+    }
+    private function getTiketBody($request){
+\App\Content_tiket::where('tiket_id',$request->input("tiketId"))])
     }
     private function getDataTiket($request)
     {
@@ -72,8 +74,7 @@ class TiketController extends Controller
 
         }
         //$data = array_merge($data, \App\Content_tiket::where('tiket_id', $data));
-
-        return $data;
+        return count($data);
     }
     public function create(Request $request){
         // $request->validate($request, [
