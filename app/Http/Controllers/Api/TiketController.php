@@ -97,10 +97,10 @@ class TiketController extends Controller
                 $name = md5(now()) . $file->getClientOriginalName();
                 $upload_success = $file->move(public_path('attachment'), $name);
                 //Storage::disk( 'attachment')->put($name, file_get_contents( $file->getRealPath()));
-                \App\Attachment::create(["name" => $name, "file" => url("attachment/$name"), "content_tiket_id" => $content->id]);
+                \App\Attachment::create(["name" => $name, "file" => "attachment/$name", "content_tiket_id" => $content->id]);
             }
         }
-        return response()->json(["status" => "success", 'data' => "null"], 200);
+        return response()->json(["status" => "success", 'msg' => "success"], 200);
 
     }
 }
