@@ -130,8 +130,8 @@ class TiketController extends Controller
      */
     public function show($id)
     {
-        $tiket = \App\Tiket::find($id);
-        $contentTiket = \App\Content_tiket::where('tiket_id',$id)->orderBy('id',"DESC")->get();
+        $tiket = \App\Tiket::findOrFail($id);
+        $contentTiket = \App\Content_tiket::where('tiket_id', $tiket->id)->orderBy('id',"DESC")->get();
         $status = \App\Status::all();
         $tiket = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
             ->join('content_tikets', 'content_tikets.id', 'tikets.id')
