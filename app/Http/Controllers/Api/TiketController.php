@@ -27,6 +27,7 @@ class TiketController extends Controller
                 return response()->json(["status" => "success", 'data' => $this->getDataTiket($request), 'total' => \App\Tiket::where('user_id', $request->user()->id)->count()]);
                 break;
             case "tiketContent":
+            
                 return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('tiket_id',$request->input("tiketId"))]);
                 break;
             default:
