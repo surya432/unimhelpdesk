@@ -50,7 +50,6 @@ class TiketController extends Controller
                 ->orderBy('id', 'DESC')->paginate(10);
         }else{
             $departementId = Role::where('name', Auth::user()->getRoleNames())->get();
-            //dd($departementId['0']);
             $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
                 ->join('content_tikets', 'content_tikets.id', 'tikets.id')
                 ->join('departements', 'departements.id', 'tikets.departement_id')

@@ -27,7 +27,7 @@ class TiketController extends Controller
                 return response()->json(["status" => "success", 'data' => $this->getDataTiket($request), 'total' => \App\Tiket::where('user_id', $request->user()->id)->count()]);
                 break;
             case "tiketContent":
-                return response()->json(["status" => "success", 'data' => \App\Content_tiket::all()]);
+                return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('tiket_id',$request->input("tiketId"))]);
                 break;
             default:
                 return response()->json(["status" => "failed", 'data' => "null"], 404);
@@ -68,5 +68,33 @@ class TiketController extends Controller
         //$data = array_merge($data, \App\Content_tiket::where('tiket_id', $data));
 
         return $data;
+    }
+    public function create(Request $request){
+        $request->validate($request, [
+            'subject' => 'required',
+            'body' => 'required',
+            'prioritas_id' => 'required',
+            'user_id' => 'required',
+            'status_id' => 'required',
+            'departement_id' => 'required',
+            'senders' => 'required',
+            'attachment' => 'max:5000',
+        ]);
+        $tiket = \App\Tiket::create($request->only('subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id'));
+        $content = new \App\Content_tiket;
+        $content->body = $request->input('body');
+        $content->senders = $request->input('senders');
+        $content->tiket_id = $tiket->id;
+        $content->save();
+        if ($request->hasFile('attachment')) {
+            foreach ($request->file('attachment') as $file) {
+                $name = md5(now()) . $file->getClientOriginalName();
+                $upload_success = $file->move(public_path('attachment'), $name);
+                //Storage::disk( 'attachment')->put($name, file_get_contents( $file->getRealPath()));
+                \App\Attachment::create(["name" => $name, "file" => url("attachment/$name"), "content_tiket_id" => $content->id]);
+            }
+        }
+        return response()->json(["status" => "success", 'data' => "null"], 200);
+
     }
 }
