@@ -70,9 +70,8 @@ class TiketController extends Controller
                 ->orderBy('tikets.id', 'DESC')->get();
 
         }
-        //$data = array_merge($data, \App\Content_tiket::where('tiket_id', $data));
-            $bodyTiket = \App\Content_tiket::where('tiket_id',$request->input("tiketId"));
-            $data = array_marge($data, ['bodyTiket' => $bodyTiket]);  
+        $bodyTiket = \App\Content_tiket::where('tiket_id', $data->id);
+        $data = array_marge($data, ['bodyTiket' => $bodyTiket]);  
             return $data;
         
     }
