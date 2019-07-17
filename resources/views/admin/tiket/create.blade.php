@@ -114,6 +114,20 @@
             <div class="form-group">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
+                        {{Form::label('Service', 'Service')}}
+                    </div>
+                    <div class="panel-body">
+                        <select name="services_id" id="services_id" class="permisionlist form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1">
+                            @foreach($services as $value)
+                            <option value="{{$value->id}}" {{ ($value->name == "Medium") ? "selected" : ""}}>{{ $value->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
                         {{Form::label('Status', 'Status')}}
                     </div>
                     <div class="panel-body">
@@ -125,6 +139,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="form-group">
                 <div class="panel panel-primary">
                     <div class="panel-heading">

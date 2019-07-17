@@ -79,8 +79,9 @@ class TiketController extends Controller
        
         $prioritas = \App\Prioritas::all();
         $status = \App\Status::all();
+        $services = \App\Services::all();
         $departement =Role::whereNotIn('name', ['SuperAdmin', 'User'])->get();
-        return view('admin.tiket.create', compact('user', 'prioritas', 'status', 'departement'));
+        return view('admin.tiket.create', compact('user', 'prioritas', 'status', 'departement', 'services'));
     }
 
 
@@ -98,12 +99,13 @@ class TiketController extends Controller
             'prioritas_id' => 'required',
             'user_id' => 'required',
             'status_id' => 'required',
+            'services_id' => 'required',
             'departement_id' => 'required',
             'senders' => 'required',
             'attachment' => 'max:5000',
 
         ]);
-            $tiket = \App\Tiket::create($request->only('subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id'));
+            $tiket = \App\Tiket::create($request->only('subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id', 'services_id'));
             $content = new \App\Content_tiket;
             $content->body = $request->input('body');
             $content->senders = $request->input('senders');
@@ -131,14 +133,14 @@ class TiketController extends Controller
     public function show($id)
     {
         $tiket = \App\Tiket::findOrFail($id);
-        //$contentTiket = \App\Content_tiket::where('tiket_id', $tiket->id)->orderBy('id',"DESC")->get();
+        $contentTiket = \App\Content_tiket::where('tiket_id', $tiket->id)->orderBy('id',"DESC")->get();
         $status = \App\Status::all();
         $tiket = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
             ->join('content_tikets', 'content_tikets.id', 'tikets.id')
             ->join('departements', 'departements.id', 'tikets.departement_id')
             ->join('statuses', 'statuses.id', 'tikets.status_id')
             ->join('prioritas', 'prioritas.id', 'tikets.prioritas_id')
-            ->where('tikets.id', $id)
+            ->where('tikets.id', $tiket->id)
             ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
             ->first();
         return view('admin.tiket.show', compact( 'tiket', 'contentTiket', 'status'));
@@ -209,7 +211,6 @@ class TiketController extends Controller
                 $name = md5(now()) . $file->getClientOriginalName();
                 $upload_success = $file->move(public_path('attachment'), $name);
                 //Storage::disk( 'attachment')->put($name, file_get_contents( $file->getRealPath()));
-
                 \App\Attachment::create(["name" => $name, "file" => url("attachment/$name"), "content_tiket_id" => $content->id]);
             }
         }

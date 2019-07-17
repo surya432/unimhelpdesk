@@ -28,6 +28,7 @@ Route::group(['middleware' => [ 'web', 'auth']], function () {
         Route::resource('permission', 'PermissionController');
         Route::resource('prioritas', 'PrioritasController');
         Route::resource('status', 'StatusController');
+        Route::resource('services', 'ServicesController');
     });
     Route::prefix('/admin/page')->group(function () {
         Route::resource('tiket', 'TiketController');

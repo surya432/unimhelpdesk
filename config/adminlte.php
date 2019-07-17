@@ -145,6 +145,13 @@ return [
                     'icon' => 'lock',
                     'can' => 'role-list',
 
+                ],
+                [
+                    'text' => 'Master Related Services',
+                    'url'  => 'admin/master/services',
+                    'icon' => 'lock',
+                    'can' => 'services-list',
+
                 ], [
                     'text' => 'Master Access',
                     'url'  => 'admin/master/permission',
