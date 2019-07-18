@@ -115,8 +115,12 @@ class TiketController extends Controller
                 foreach ($request->file( 'attachment') as $file) {
                     $name = md5(now()).$file->getClientOriginalName();
                     $upload_success = $file->move( public_path( 'attachment'), $name);
+                try {
                     $mime = $file->getMimeType();
-                    \App\Attachment::create(["name" => $name, "file" => "attachment/$name", "mime" =>  $mime, "content_tiket_id" => $content->id]);
+                } catch (\Exception $e) {
+                    $mime = $file->getClientMimeType();
+                }
+                \App\Attachment::create(["name" => $name, "file" => "attachment/$name", "mime" =>  $mime, "content_tiket_id" => $content->id]);
                 }
             }
 

@@ -78,34 +78,5 @@ class TiketController extends Controller
             return $data;
         
     }
-    public function create(Request $request){
-        $request->validate($request, [
-            'subject' => 'required',
-            'body' => 'required',
-            'prioritas_id' => 'required',
-            'user_id' => 'required',
-            'status_id' => 'required',
-            'services_id' => 'required',
-            'departement_id' => 'required',
-            'senders' => 'required',
-            'attachment' => 'max:100000',
-        ]);
-        $tiket = \App\Tiket::create($request->only('subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id', 'services_id'));
-        $content = new \App\Content_tiket;
-        $content->body = $request->input('body');
-        $content->senders = $request->input('senders');
-        $content->tiket_id = $tiket->id;
-        $content->save();
-        if ($request->hasFile('attachment')) {
-            foreach ($request->file('attachment') as $file) {
-                $name = md5(now() . $file->getClientOriginalName());
-                $upload_success = $file->move(public_path('attachment'), $name);
-                $mime = $file->getMimeType();
-                $finfo = new \finfo(FILEINFO_MIME_TYPE);
-                //Storage::disk( 'attachment')->put($name, file_get_contents( $file->getRealPath()));
-                \App\Attachment::create(["name" => $name, "file" => "attachment/$name", "mime"=>  $mime, "content_tiket_id" => $content->id]);
-            }
-        }
-        return response()->json(["status" => "success", 'msg' => "success"], 200);
-    }
+   
 }
