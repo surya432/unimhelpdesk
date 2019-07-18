@@ -2,6 +2,8 @@
 # activate maintenance mode
 php artisan down
 # update source code
+git reset -- hard
+
 git pull
 # update PHP dependencies
 composer install --no-interaction --no-dev --prefer-dist
