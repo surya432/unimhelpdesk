@@ -8,6 +8,6 @@ class Attachment extends Model
 {
     //
     protected $fillable = [
-        'name', 'file', 'content_tiket_id',
+        'name', 'file', 'content_tiket_id',"mime"
     ];
 }
