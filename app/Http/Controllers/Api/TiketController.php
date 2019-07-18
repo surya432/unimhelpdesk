@@ -78,5 +78,40 @@ class TiketController extends Controller
             return $data;
         
     }
-   
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'subject' => 'required',
+            'body' => 'required',
+            'prioritas_id' => 'required',
+            'user_id' => 'required',
+            'status_id' => 'required',
+            'services_id' => 'required',
+            'departement_id' => 'required',
+            'senders' => 'required',
+            'attachment' => 'max:5000',
+
+        ]);
+        $tiket = \App\Tiket::create($request->only('subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id', 'services_id'));
+        $content = new \App\Content_tiket;
+        $content->body = $request->input('body');
+        $content->senders = $request->input('senders');
+        $content->tiket_id = $tiket->id;
+        $content->save();
+        if ($request->hasFile('attachment')) {
+            foreach ($request->file('attachment') as $file) {
+                $name = md5(now()) . $file->getClientOriginalName();
+                $upload_success = $file->move(public_path('attachment'), $name);
+                try {
+                    $mime = $file->getMimeType();
+                } catch (\Exception $e) {
+                    $mime = $file->getClientMimeType();
+                }
+                \App\Attachment::create(["name" => $name, "file" => "attachment/$name", "mime" =>  $mime, "content_tiket_id" => $content->id]);
+            }
+        }
+
+        return redirect()->route('tiket.index')
+            ->with('success', 'tiket created successfully');
+    }
 }
