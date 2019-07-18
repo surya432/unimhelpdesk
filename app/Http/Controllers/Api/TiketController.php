@@ -30,7 +30,7 @@ class TiketController extends Controller
                 return response()->json(["status" => "success", 'data' => \App\Services::all()]);
                 break;
             case "tiketContent":
-                return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('content_tikets.tiket_id',$request->input("tiketId"))->join('attachments', "content_tikets.id", "attachments.content_tiket_id")->get()]);
+                return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('content_tikets.tiket_id',$request->input("tiketId"))->get()]);
                 break;
             default:
                 return response()->json(["status" => "failed", 'data' => "null"], 404);
