@@ -100,9 +100,10 @@ class TiketController extends Controller
             foreach ($request->file('attachment') as $file) {
                 $name = md5(now() . $file->getClientOriginalName());
                 $upload_success = $file->move(public_path('attachment'), $name);
+                $mime = $file->getMimeType();
                 $finfo = new \finfo(FILEINFO_MIME_TYPE);
                 //Storage::disk( 'attachment')->put($name, file_get_contents( $file->getRealPath()));
-                \App\Attachment::create(["name" => $name, "file" => "attachment/$name", "mime"=> $file->getClientMimeType(), "content_tiket_id" => $content->id]);
+                \App\Attachment::create(["name" => $name, "file" => "attachment/$name", "mime"=>  $mime, "content_tiket_id" => $content->id]);
             }
         }
         return response()->json(["status" => "success", 'msg' => "success"], 200);
