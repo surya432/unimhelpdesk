@@ -79,17 +79,18 @@ class TiketController extends Controller
         
     }
     public function create(Request $request){
-        // $request->validate($request, [
-        //     'subject' => 'required',
-        //     'body' => 'required',
-        //     'prioritas_id' => 'required',
-        //     'user_id' => 'required',
-        //     'status_id' => 'required',
-        //     'departement_id' => 'required',
-        //     'senders' => 'required',
-        //     'attachment' => 'max:5000',
-        // ]);
-        $tiket = \App\Tiket::create($request->only('subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id'));
+        $request->validate($request, [
+            'subject' => 'required',
+            'body' => 'required',
+            'prioritas_id' => 'required',
+            'user_id' => 'required',
+            'status_id' => 'required',
+            'services_id' => 'required',
+            'departement_id' => 'required',
+            'senders' => 'required',
+            'attachment' => 'max:100000',
+        ]);
+        $tiket = \App\Tiket::create($request->only('subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id', 'services_id'));
         $content = new \App\Content_tiket;
         $content->body = $request->input('body');
         $content->senders = $request->input('senders');

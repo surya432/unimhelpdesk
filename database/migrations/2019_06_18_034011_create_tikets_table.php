@@ -19,6 +19,7 @@ class CreateTiketsTable extends Migration
             $table->integer('user_id');
             $table->integer('prioritas_id');
             $table->integer('status_id');
+            $table->integer('service_id');
             $table->integer('departement');
             $table->integer('rate');
             $table->timestamps();
