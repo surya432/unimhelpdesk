@@ -14,7 +14,7 @@ class Content_tiket extends Model
     {
         return $this->hasMany('App\Tiket');
     }
-     public function attachments()
+     public function attachmentFile()
     {
         return $this->hasMany('App\Attachment', 'content_tiket_id', 'id');
     }
