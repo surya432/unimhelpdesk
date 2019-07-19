@@ -112,7 +112,7 @@ class TiketController extends Controller
             }
         }
 
-        return redirect()->route('tiket.index')
-            ->with('success', 'tiket created successfully');
+        return response()->json(["status" => "success", 'msg' => "Created Sukses"], 200);
+
     }
 }
