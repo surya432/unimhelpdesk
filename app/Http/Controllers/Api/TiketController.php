@@ -90,13 +90,17 @@ class TiketController extends Controller
             'departement_id' => 'required',
             'senders' => 'required',
             'attachment' => 'max:5000',
-
         ]);
         $tiket = \App\Tiket::create($request->only('subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id', 'services_id'));
         $content = new \App\Content_tiket;
         $content->body = $request->input('body');
         $content->senders = $request->input('senders');
         $content->tiket_id = $tiket->id;
+        $repply = 1;
+        if($request->user()->hasRole("User")){
+            $repply = 1;
+        }
+        $content->reply = $repply;
         $content->save();
         if ($request->hasFile('attachment')) {
             foreach ($request->file('attachment') as $file) {
