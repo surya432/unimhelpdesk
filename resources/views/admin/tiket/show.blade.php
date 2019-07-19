@@ -101,7 +101,7 @@
             {{Form::hidden('repply', 0, array('id' => 'repply')) }}
         @else
             {{Form::hidden('repply', 1, array('id' => 'repply')) }}
-        @enfif
+        @endfif
         {{Form::hidden('tiket_id', $tiket->id, array('id' => 'tiket_id')) }}
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="panel panel-primary">
