@@ -98,10 +98,10 @@
         {!! Form::open(array('route' => 'tiket.replyTiket','method'=>'POST','files'=> true)) !!}
         {{Form::hidden('senders', Auth::user()->name, array('id' => 'senders')) }}
         @if (Auth::user()->hasRole("User"))
-            {{Form::hidden('repply', 0, array('id' => 'repply')) }}
+        {{Form::hidden('repply', 0, array('id' => 'repply')) }}
         @else
-            {{Form::hidden('repply', 1, array('id' => 'repply')) }}
-        @endfif
+        {{Form::hidden('repply', 1, array('id' => 'repply')) }}
+        @endif
         {{Form::hidden('tiket_id', $tiket->id, array('id' => 'tiket_id')) }}
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="panel panel-primary">
