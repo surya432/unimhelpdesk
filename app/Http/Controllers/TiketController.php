@@ -110,11 +110,11 @@ class TiketController extends Controller
             $content->body = $request->input('body');
             $content->senders = $request->input('senders');
             $content->tiket_id = $tiket->id;
-        $repply = 1;
-        if ($request->user()->hasRole("User")) {
-            $repply = 0;
-        }
-        $content->repply = $repply;
+            if ($request->user()->hasRole("User")) {
+            $content->repply = "0";
+            }else{
+            $content->repply = "1";
+            }
             $content->save();
             if( $request->hasFile( 'attachment')){
                 foreach ($request->file( 'attachment') as $file) {
