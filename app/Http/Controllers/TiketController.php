@@ -111,9 +111,9 @@ class TiketController extends Controller
             $content->senders = $request->input('senders');
             $content->tiket_id = $tiket->id;
             if (Auth::user()->hasRole("User")) {
-            $content->repply = "0";
+            $content->repply = 0;
             }else{
-            $content->repply = "1";
+            $content->repply = 1;
             }
             $content->save();
             if( $request->hasFile( 'attachment')){
