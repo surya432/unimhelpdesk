@@ -138,15 +138,17 @@ class TiketController extends Controller
     public function show($id)
     {
         $tiket = \App\Tiket::findOrFail($id);
-        $contentTiket = \App\Content_tiket::where('tiket_id', $tiket->id)->orderBy('id',"DESC")->get();
+        $contentTiket = \App\Content_tiket::where('tiket_id', $tiket->id)->orderBy('id',"DESC")->with('attachmentFile')->get();
         $status = \App\Status::all();
         $tiket = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
-            ->join('content_tikets', 'content_tikets.id', 'tikets.id')
+            //->join('content_tikets', 'content_tikets.id', 'tikets.id')
             ->join('departements', 'departements.id', 'tikets.departement_id')
             ->join('statuses', 'statuses.id', 'tikets.status_id')
             ->join('prioritas', 'prioritas.id', 'tikets.prioritas_id')
             ->where('tikets.id', $tiket->id)
-            ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
+            //->with('RepplyTiket')
+
+            ->select('tikets.*','users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
             ->first();
         return view('admin.tiket.show', compact( 'tiket', 'contentTiket', 'status'));
     }

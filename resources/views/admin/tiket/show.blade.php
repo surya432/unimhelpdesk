@@ -14,28 +14,28 @@
         </div>
         @endcan
     </div>
-</div>
 
 
-@if (count($errors) > 0)
-<div class="alert alert-danger">
-    <strong>Whoops!</strong> There were some problems with your input.<br><br>
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
+
+    @if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
 
-@if(Session::has('success'))
-<div class="alert alert-success">
-    {{ Session::get('success')}}
-</div>
-@endif
+    @if(Session::has('success'))
+    <div class="alert alert-success">
+        {{ Session::get('success')}}
+    </div>
+    @endif
 
-<div class="row">
+
 
     <div class="col-lg-12">
         <div class="col-xs-4 col-sm-4 col-md-4">
@@ -141,11 +141,20 @@
 
         </div>
         {!! Form::close() !!}
-
+        @foreach ($contentTiket as $repply)
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{ $repply->senders}}
+                </div>
+                <div class="panel-body">
+                    {!! $repply->body!!}
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
-    <div class="col-lg-12">
 
-    </div>
 </div>
 @stop
 @section('js')

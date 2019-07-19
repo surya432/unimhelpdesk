@@ -10,8 +10,8 @@ class Tiket extends Model
     protected $fillable = [
         'subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id', 'rate',
     ];
-    function content()
+    public function RepplyTiket()
     {
-        return $this->belongsTo( 'App\Content_tiket');
+        return $this->hasMany('App\Content_tiket', 'tiket_id', 'content_tikets.id');
     }
 }
