@@ -100,7 +100,7 @@ class TiketController extends Controller
         if($request->user()->hasRole("User")){
             $repply = 0;
         }
-        $content->reply = $repply;
+        $content->repply = $repply;
         $content->save();
         if ($request->hasFile('attachment')) {
             foreach ($request->file('attachment') as $file) {
