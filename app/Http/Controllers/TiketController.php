@@ -40,14 +40,14 @@ class TiketController extends Controller
                 ->join('statuses', 'statuses.id', 'tikets.status_id')
                 ->where('tikets.user_id',Auth::user()->id)
                 ->select('tikets.*', 'users.name as userName', 'departements.name as departementName', 'statuses.name as statusName')
-                ->orderBy('id', 'DESC')->paginate(10);
+                ->orderBy('updated_at', 'DESC')->paginate(10);
         } else if ( Auth::user()->hasRole("SuperAdmin")) {
             $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
                 ->join('content_tikets', 'content_tikets.id', 'tikets.id')
                 ->join('departements', 'departements.id', 'tikets.departement_id')
                 ->join('statuses', 'statuses.id', 'tikets.status_id')
                 ->select('tikets.*', 'users.name as userName', 'departements.name as departementName', 'statuses.name as statusName')
-                ->orderBy('id', 'DESC')->paginate(10);
+                ->orderBy('updated_at', 'DESC')->paginate(10);
         }else{
             $departementId = Role::where('name', Auth::user()->getRoleNames())->get();
             $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
@@ -217,7 +217,7 @@ class TiketController extends Controller
             $content->repply = $request->input('repply');
             $content->save();
 
-            \App\Tiket::where('id', $request->input('tiket_id'))->touch();
+            \App\Tiket::find($request->input('tiket_id'))->touch();
          if ($request->hasFile('attachment')) {
             foreach ($request->file('attachment') as $file) {
                 $name = md5(now()) . $file->getClientOriginalName();
