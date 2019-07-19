@@ -56,7 +56,7 @@ class TiketController extends Controller
                 ->join('statuses', 'statuses.id', 'tikets.status_id')
                 ->select('tikets.*', 'users.name as userName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->where('tikets.departement_id' , $departementId['0']['id'])
-                ->orderBy('id', 'DESC')->paginate(10);
+                ->orderBy('updated_at', 'DESC')->paginate(10);
         }
         return view('admin.tiket.index', compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -215,8 +215,9 @@ class TiketController extends Controller
             $content->senders = $request->input('senders');
             $content->tiket_id = $request->input('tiket_id');
             $content->repply = $request->input('repply');
-         
             $content->save();
+
+            \App\Tiket::where('id', $request->input('tiket_id'))->touch();
          if ($request->hasFile('attachment')) {
             foreach ($request->file('attachment') as $file) {
                 $name = md5(now()) . $file->getClientOriginalName();
