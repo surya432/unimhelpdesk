@@ -98,7 +98,7 @@ class TiketController extends Controller
         $content->tiket_id = $tiket->id;
         $repply = 1;
         if($request->user()->hasRole("User")){
-            $repply = 1;
+            $repply = 0;
         }
         $content->reply = $repply;
         $content->save();
