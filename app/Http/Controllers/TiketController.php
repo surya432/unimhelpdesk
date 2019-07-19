@@ -210,7 +210,13 @@ class TiketController extends Controller
             'attachment' => 'max:5000',
         ]);
 
-        $content = \App\Content_tiket::Create($request->all());
+         $content = new \App\Content_tiket;
+            $content->body = $request->input('body');
+            $content->senders = $request->input('senders');
+            $content->tiket_id = $request->input('tiket_id');
+            $content->repply = $request->input('repply');
+         
+            $content->save();
          if ($request->hasFile('attachment')) {
             foreach ($request->file('attachment') as $file) {
                 $name = md5(now()) . $file->getClientOriginalName();
