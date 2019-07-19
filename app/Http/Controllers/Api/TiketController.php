@@ -30,7 +30,7 @@ class TiketController extends Controller
                 return response()->json(["status" => "success", 'data' => \App\Services::all()]);
                 break;
             case "tiketContent":
-                return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('content_tikets.tiket_id',$request->input("tiketId"))->get()]);
+                return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('content_tikets.tiket_id',$request->input("tiketId"))->attachment()->get()]);
                 break;
             default:
                 return response()->json(["status" => "failed", 'data' => "null"], 404);
@@ -102,6 +102,7 @@ class TiketController extends Controller
             foreach ($request->file('attachment') as $file) {
                 $name = md5(now()) . $file->getClientOriginalName();
                 $upload_success = $file->move(public_path('attachment'), $name);
+                $mime = $file->getClientMimeType();
                 try {
                     $mime = $file->getMimeType();
                 } catch (\Exception $e) {
