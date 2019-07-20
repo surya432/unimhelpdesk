@@ -57,7 +57,7 @@ class TiketController extends Controller
                 ->join('departements', 'departements.id', 'tikets.departement_id')
                 ->join('statuses', 'statuses.id', 'tikets.status_id')
                 ->join('prioritas', 'prioritas.id', 'tikets.status_id')
-                ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
+                //->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->orderBy('tikets.updated_at', 'DESC')->get();
         } else {
             $departementId = Role::where('name', $request->user()->getRoleNames())->get();
@@ -68,7 +68,7 @@ class TiketController extends Controller
                 ->join('statuses', 'statuses.id', 'tikets.status_id')
                 ->join('content_tikets', 'content_tikets.tiket_id', 'tikets.id')
                 ->join('prioritas', 'prioritas.id', 'tikets.status_id')
-                ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
+                //->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->where('tikets.departement_id', $departementId['0']['id'])
                 ->orderBy('tikets.updated_at', 'DESC')->get();
 
