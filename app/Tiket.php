@@ -12,11 +12,11 @@ class Tiket extends Model
     ];
     public function RepplyTiket()
     {
-        return $this->hasMany('App\Content_tiket', 'tiket_id', 'content_tikets.id');
+        return $this->hasMany('App\Content_tiket', 'content_tikets.id', 'tikets.tiket_id');
     }
     public function Departement()
     {
-        return $this->hasMany('App\Departement', 'departement_id', 'departements.id');
+        return $this->hasMany('App\Departement', 'departements.id', 'tikets.departement_id');
     }
     public function Status()
     {
