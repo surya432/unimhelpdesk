@@ -89,7 +89,6 @@ class TiketController extends Controller
             'services_id' => 'required',
             'departement_id' => 'required',
             'senders' => 'required',
-            'attachment' => 'max:5000',
         ]);
         $tiket = \App\Tiket::create($request->only('subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id', 'services_id'));
         $content = new \App\Content_tiket;
