@@ -22,4 +22,12 @@ class Tiket extends Model
     {
         return $this->hasMany('App\Status', 'statuses.id', 'tikets.status_id');
     }
+    public function Prioritas()
+    {
+        return $this->hasMany('App\Prioritas', 'prioritas.id', 'tikets.prioritas_id');
+    }
+    public function Users()
+    {
+        return $this->hasMany('App\User', 'users.id', 'tikets.user_id');
+    }
 }
