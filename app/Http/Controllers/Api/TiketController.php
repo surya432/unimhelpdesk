@@ -131,11 +131,11 @@ class TiketController extends Controller
         $content = new \App\Content_tiket;
         $content->body = $request->input('body');
         $content->senders = $request->input('senders');
-        $content->tiket_id = $request->input('tiketId');
+        $content->tiket_id = $request->input('tiket_id');
         $content->repply = $request->input('repply');
         $content->save();
 
-        \App\Tiket::find($request->input('tiketId'))->touch();
+        \App\Tiket::find($request->input('tiket_id'))->touch();
         if ($request->hasFile('attachment')) {
             foreach ($request->file('attachment') as $file) {
                 $name = md5(now()) . $file->getClientOriginalName();
