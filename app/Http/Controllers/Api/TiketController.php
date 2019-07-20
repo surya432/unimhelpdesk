@@ -42,7 +42,7 @@ class TiketController extends Controller
     private function getDataTiket($request)
     {
         if ($request->user()->hasRole('User')) {
-            $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
+            $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id')->with('Departement')->with('Status')
                 //->join('content_tikets', 'content_tikets.id', 'tikets.id')
                 //->join('departements', 'departements.id', 'tikets.departement_id')
                 //->join('statuses', 'statuses.id', 'tikets.status_id')
