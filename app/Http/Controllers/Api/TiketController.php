@@ -126,7 +126,6 @@ class TiketController extends Controller
             'senders' => 'required',
             'repply' => 'required',
             'tiket_id' => 'required',
-            'attachment' => 'max:5000',
         ]);
 
         $content = new \App\Content_tiket;
