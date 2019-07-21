@@ -34,26 +34,26 @@ class TiketController extends Controller
     {
         //dd( Auth::user()->getRoleNames());
         if ( Auth::user()->hasRole('User')) {
-            $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
-                ->join('content_tikets', 'content_tikets.id', 'tikets.id')
-                ->join('departements', 'departements.id', 'tikets.departement_id')
-                ->join('statuses', 'statuses.id', 'tikets.status_id')
+            $data = \App\Tiket::join('users', 'tikets.user_id', '=',  'users.id')
+                ->join('content_tikets', 'content_tikets.id', '=',  'tikets.id')
+                ->join('departements', 'departements.id', '=',  'tikets.departement_id')
+                ->join('statuses', 'statuses.id', '=',  'tikets.status_id')
                 ->where('tikets.user_id',Auth::user()->id)
                 ->select('tikets.*', 'users.name as userName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->orderBy('updated_at', 'DESC')->paginate(10);
         } else if ( Auth::user()->hasRole("SuperAdmin")) {
-            $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
-                ->join('content_tikets', 'content_tikets.id', 'tikets.id')
-                ->join('departements', 'departements.id', 'tikets.departement_id')
-                ->join('statuses', 'statuses.id', 'tikets.status_id')
+            $data = \App\Tiket::join('users', 'tikets.user_id', '=',  'users.id')
+                ->join('content_tikets', 'content_tikets.id', '=',  'tikets.id')
+                ->join('departements', 'departements.id',  '=', 'tikets.departement_id')
+                ->join('statuses', 'statuses.id', '=',  'tikets.status_id')
                 ->select('tikets.*', 'users.name as userName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->orderBy('updated_at', 'DESC')->paginate(10);
         }else{
             $departementId = Role::where('name', Auth::user()->getRoleNames())->get();
-            $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
-                ->join('content_tikets', 'content_tikets.id', 'tikets.id')
-                ->join('departements', 'departements.id', 'tikets.departement_id')
-                ->join('statuses', 'statuses.id', 'tikets.status_id')
+            $data = \App\Tiket::join('users', 'tikets.user_id', '=',  'users.id')
+                ->join('content_tikets', 'content_tikets.id', '=',  'tikets.id')
+                ->join('departements', 'departements.id',  '=', 'tikets.departement_id')
+                ->join('statuses', 'statuses.id',  '=', 'tikets.status_id')
                 ->select('tikets.*', 'users.name as userName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->where('tikets.departement_id' , $departementId['0']['id'])
                 ->orderBy('updated_at', 'DESC')->paginate(10);
