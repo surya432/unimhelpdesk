@@ -21,13 +21,13 @@ class TiketController extends Controller
                 return response()->json(["status" => "success", 'data' => $request->user()->hasRole('User')]);
                 break;
             case "departement":
-                return response()->json(["status" => "success", 'data' => Role::whereNotIn("name", ["SuperAdmin", "User"])->get()]);
+                return response()->json(["status" => "success", 'data' => \App\Departement::all()]);
                 break;
             case "prioritas":
                 return response()->json(["status" => "success", 'data' => \App\Prioritas::all()]);
                 break;
             case "tiket":
-                return response()->json(["status" => "success", 'data' => $this->getDataTiket($request), 'total' => \App\Tiket::where('user_id', $request->user()->id)->count()]);
+                return response()->json(["status" => "success", 'data' => $this->getDataTiket($request)]);
                 break;
             case "services":
                 return response()->json(["status" => "success", 'data' => \App\Services::all()]);
