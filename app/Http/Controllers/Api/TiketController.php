@@ -18,7 +18,7 @@ class TiketController extends Controller
                 return response()->json(["status" => "success", 'data' => \App\Status::all()]);
                 break;
             case "departement":
-                return response()->json(["status" => "success", 'data' => Role:: whereNotIn("name",[ "SuperAdmin", "User"])->get()]);
+                return response()->json(["status" => "success", 'data' => Role::whereNotIn("name", ["SuperAdmin", "User"])->get()]);
                 break;
             case "prioritas":
                 return response()->json(["status" => "success", 'data' => \App\Prioritas::all()]);
@@ -30,32 +30,30 @@ class TiketController extends Controller
                 return response()->json(["status" => "success", 'data' => \App\Services::all()]);
                 break;
             case "tiketContent":
-                return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('content_tikets.tiket_id',$request->input("tiketId"))->with('attachmentFile')->get()]);
+                return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('content_tikets.tiket_id', $request->input("tiketId"))->with('attachmentFile')->get()]);
                 break;
             default:
                 return response()->json(["status" => "failed", 'data' => "null"], 404);
         }
     }
-    private function getTiketBody($request){
-        
-    }
+    private function getTiketBody($request)
+    { }
     private function getDataTiket($request)
     {
         if ($request->user()->hasRole('User')) {
-            $data = \App\Tiket::
-            //join('users', 'tikets.user_id', 'users.id') //->with('Departement')->with('Status')->with('Prioritas')
-            //     ->join('content_tikets', 'content_tikets.id', 'tikets.id')
-            //     ->join('departements', 'departements.id', 'tikets.departement_id')
-            //     ->join('statuses', 'statuses.id', 'tikets.status_id')
-            //    // ->join('services', 'services.id', 'tikets.service_id')
-            //     ->join('prioritas', 'prioritas.id', 'tikets.prioritas_id')
-            //     ->
-            where('tikets.user_id', $request->user()->id)->with('users')
-                // ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
+            $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id') //->with('Departement')->with('Status')->with('Prioritas')
+                //     ->join('content_tikets', 'content_tikets.id', 'tikets.id')
+                //     ->join('departements', 'departements.id', 'tikets.departement_id')
+                //     ->join('statuses', 'statuses.id', 'tikets.status_id')
+                //    // ->join('services', 'services.id', 'tikets.service_id')
+                //     ->join('prioritas', 'prioritas.id', 'tikets.prioritas_id')
+                //     ->
+                ->where('tikets.user_id', $request->user()->id)
+                ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->orderBy('tikets.updated_at', 'DESC')->get();
         } else if ($request->user()->hasRole("SuperAdmin")) {
             $data = \App\Tiket::
-            //join('users', 'tikets.user_id', 'users.id')
+                //join('users', 'tikets.user_id', 'users.id')
                 //->join('content_tikets', 'content_tikets.id', 'tikets.id')
                 //->join('departements', 'id', 'tikets.departement_id')
                 //->join('statuses', 'statuses.id', 'tikets.status_id')
@@ -75,9 +73,8 @@ class TiketController extends Controller
                 // ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
                 where('tikets.departement_id', $departementId['0']['id'])
                 ->orderBy('tikets.updated_at', 'DESC')->get();
-
         }
-            return $data;
+        return $data;
     }
     public function store(Request $request)
     {
@@ -117,7 +114,6 @@ class TiketController extends Controller
         }
 
         return response()->json(["status" => "success", 'msg' => "Created Sukses"], 200);
-
     }
     public function replyTiket(Request $request)
     {

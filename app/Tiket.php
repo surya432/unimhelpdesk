@@ -12,23 +12,23 @@ class Tiket extends Model
     ];
     public function RepplyTiket()
     {
-        return $this->hasOne('App\Content_tiket', 'id', 'tikets.tiket_id');
+        return $this->hasMany('App\Content_tiket', 'id', 'tikets.tiket_id');
     }
     public function Departement()
     {
-        return $this->hasOne('App\Departement', 'id', 'tikets.departement_id');
+        return $this->hasMany('App\Departement', 'id', 'tikets.departement_id');
     }
     public function Status()
     {
-        return $this->hasOne('App\Status', 'id', 'tikets.status_id');
+        return $this->hasMany('App\Status', 'id', 'tikets.status_id');
     }
     public function Prioritas()
     {
-        return $this->hasOne('App\Prioritas', 'id', 'tikets.prioritas_id');
+        return $this->hasMany('App\Prioritas', 'id', 'tikets.prioritas_id');
     }
     public function Services()
     {
-        return $this->hasOne('App\Services', 'id', 'tikets.services_id');
+        return $this->hasMany('App\Services', 'id', 'tikets.services_id');
     }
     public function Users()
     {
