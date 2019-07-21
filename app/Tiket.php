@@ -8,7 +8,7 @@ class Tiket extends Model
 {
     //
     protected $fillable = [
-        'subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id', 'rate',
+        'subject', 'user_id', 'prioritas_id', 'services_id', 'status_id', 'departement_id', 'rate',
     ];
     public function RepplyTiket()
     {
@@ -32,6 +32,6 @@ class Tiket extends Model
     }
     public function Users()
     {
-        return $this->hasOne('App\User', 'users.id', 'tikets.user_id');
+        return $this->hasOne('App\User', 'id', 'tikets.user_id');
     }
 }
