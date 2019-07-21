@@ -41,14 +41,7 @@ class TiketController extends Controller
     private function getDataTiket($request)
     {
         if ($request->user()->hasRole('User')) {
-            $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id') //->with('Departement')->with('Status')->with('Prioritas')
-                    ->join('content_tikets', 'content_tikets.id', 'tikets.id')
-                    ->join('departements', 'departements.id', 'tikets.departement_id')
-                    ->join('statuses', 'content_tikets.id', 'tikets.status_id')
-                    //->join('services', 'services.id', 'tikets.service_id')
-                    ->join('prioritas', 'content_tikets.id', 'tikets.prioritas_id')
-                //     ->
-                ->where('tikets.user_id', $request->user()->id)
+            $data = \App\Tiket::where('tikets.user_id', $request->user()->id)
                 ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->orderBy('tikets.updated_at', 'DESC')->get();
         } else if ($request->user()->hasRole("SuperAdmin")) {
