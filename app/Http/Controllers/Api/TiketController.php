@@ -72,8 +72,7 @@ class TiketController extends Controller
                 ->orderBy('tikets.updated_at', 'DESC')->get();
 
         }
-        // $bodyTiket = \App\Content_tiket::where('tiket_id', $data->id);
-        // $data = array_marge($data, ['bodyTiket' => $bodyTiket]);  
+        
             return $data;
         
     }
