@@ -32,6 +32,6 @@ class Tiket extends Model
     }
     public function Users()
     {
-        return $this->hasOne('App\User', 'id', 'tikets.user_id');
+        return $this->hasMany('App\User', 'id', 'tikets.user_id');
     }
 }
