@@ -44,7 +44,7 @@ class TiketController extends Controller
         if ($request->user()->hasRole('User')) {
             $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id') //->with('Departement')->with('Status')->with('Prioritas')
                 ->join('content_tikets', 'content_tikets.id', 'tikets.id')
-                ->join('departements', 'id', 'departement_id')
+                ->join('departements', 'departements.id', 'departement_id')
                 ->join('statuses', 'statuses.id', 'tikets.status_id')
                 ->join('prioritas', 'prioritas.id', 'tikets.prioritas_id')
                 ->where('tikets.user_id', $request->user()->id)
