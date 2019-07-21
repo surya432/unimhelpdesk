@@ -47,7 +47,7 @@ class TiketController extends Controller
                 ->join('content_tikets', 'content_tikets.id', '=','tikets.id')
                 ->join('departements', 'departements.id','=', 'tikets.departement_id')
                 ->join('statuses', 'statuses.id', '=','tikets.status_id')
-                ->join('services', 'services.id', '=','tikets.service_id')
+                ->join('services', 'services.id', '=','tikets.services_id')
                 ->join('prioritas', 'prioritas.id', '=', 'tikets.prioritas_id')
                 ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName', 'services.name as servicesName')
                  ->orderBy('tikets.updated_at', 'DESC')->get();
@@ -56,7 +56,7 @@ class TiketController extends Controller
                 ->join('content_tikets', 'content_tikets.id', '=', 'tikets.id')
                 ->join('departements', 'departements.id', '=', 'tikets.departement_id')
                 ->join('statuses', 'statuses.id', '=', 'tikets.status_id')
-                ->join('services', 'services.id', '=', 'tikets.service_id')
+                ->join('services', 'services.id', '=', 'tikets.services_id')
                 ->join('prioritas', 'prioritas.id', '=', 'tikets.prioritas_id')
                 ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName', 'services.name as servicesName')
                 ->orderBy('tikets.updated_at', 'DESC')->get();
@@ -67,7 +67,7 @@ class TiketController extends Controller
                 ->join('content_tikets', 'content_tikets.id', '=', 'tikets.id')
                 ->join('departements', 'departements.id', '=', 'tikets.departement_id')
                 ->join('statuses', 'statuses.id', '=', 'tikets.status_id')
-                ->join('services', 'services.id', '=', 'tikets.service_id')
+                ->join('services', 'services.id', '=', 'tikets.services_id')
                 ->join('prioritas', 'prioritas.id', '=', 'tikets.prioritas_id')
                 ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName', 'services.name as servicesName')
                 ->orderBy('tikets.updated_at', 'DESC')->get();
