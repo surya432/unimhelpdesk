@@ -44,7 +44,7 @@ class TiketController extends Controller
         if ($request->user()->hasRole('User')) {
             $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id') //->with('Departement')->with('Status')->with('Prioritas')
                 ->join('content_tikets', 'content_tikets.id', 'tikets.id')
-                ->join('departements', 'departements.id', 'departement_id')
+                ->join('departements', 'departements.id', 'tikets.departement_id')
                 ->join('statuses', 'statuses.id', 'tikets.status_id')
                 ->join('services', 'services.id', 'tikets.services_id')
                 ->join('prioritas', 'prioritas.id', 'tikets.prioritas_id')
@@ -55,7 +55,7 @@ class TiketController extends Controller
         } else if ($request->user()->hasRole("SuperAdmin")) {
             $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
                 ->join('content_tikets', 'content_tikets.id', 'tikets.id')
-                ->join('departements', 'departements.id', 'departement_id')
+                ->join('departements', 'id', 'tikets.departement_id')
                 ->join('statuses', 'statuses.id', 'tikets.status_id')
                 ->join('services', 'services.id', 'tikets.services_id')
                 ->join('prioritas', 'prioritas.id', 'tikets.prioritas_id')
@@ -65,7 +65,7 @@ class TiketController extends Controller
             $departementId = Role::where('name', $request->user()->getRoleNames())->get();
             $data = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
                 ->join('content_tikets', 'content_tikets.id', 'tikets.id')
-                ->join('departements', 'departements.id', 'departement_id')
+                ->join('departements', 'departements.id', 'tikets.departement_id')
                 ->join('statuses', 'statuses.id', 'tikets.status_id')
                 ->join('services', 'services.id', 'tikets.services_id')
                 ->join('prioritas', 'prioritas.id', 'tikets.prioritas_id')
