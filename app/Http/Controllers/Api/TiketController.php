@@ -50,7 +50,7 @@ class TiketController extends Controller
             //    // ->join('services', 'services.id', 'tikets.service_id')
             //     ->join('prioritas', 'prioritas.id', 'tikets.prioritas_id')
             //     ->
-            where('tikets.user_id', $request->user()->id)
+            where('tikets.user_id', $request->user()->id)->with('users')
                 // ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
                 ->orderBy('tikets.updated_at', 'DESC')->get();
         } else if ($request->user()->hasRole("SuperAdmin")) {
