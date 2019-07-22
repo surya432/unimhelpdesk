@@ -8,7 +8,7 @@
         <div class="pull-left">
             <h2>Edit Artikel</h2>
         </div>
-        @can('departement-list')
+        @can('artikel-list')
         <div class="pull-right">
             <a class="btn btn-primary" href="{{ route('artikel.index') }}"> Back</a>
         </div>
@@ -36,7 +36,7 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-            <strong>Name:</strong>
+            <strong>Title:</strong>
             {!! Form::text('name', $datacontent->name, array('placeholder' => 'Name','class' => 'form-control')) !!}
         </div>
         <div class="form-group">

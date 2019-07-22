@@ -29,7 +29,7 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th>No</th>
-                                    <th>Name</th>
+                                    <th>title</th>
                                     <th width="20%">Action</th>
                                 </tr>
                             </thead>
@@ -38,6 +38,7 @@
                                 <tr>
                                     <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
+                                    <td>{{ $user->created_by }}</td>
                                     <td>
                                         <a class="btn btn-info btn-xs" href="{{ route('artikel.show',$user->id) }}">Show</a>
                                         @can('artikel-edit')
