@@ -30,6 +30,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>title</th>
+                                    <th>Create By</th>
                                     <th width="20%">Action</th>
                                 </tr>
                             </thead>
