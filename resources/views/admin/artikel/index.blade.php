@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Master Access')
+@section('title', 'Master Artikel')
 
 @section('content_header')
-<h1>Master Access</h1>
+<h1>Master Artikel</h1>
 @stop
 
 @section('content')
@@ -18,14 +18,14 @@
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    List Access
-                    @can('permission-create')
-                    <a class="btn btn-success btn-xs" href="{{ route('permission.create') }}"> Create New Permission</a>
+                    List Artikel
+                    @can('artikel-create')
+                    <a class="btn btn-success btn-sm" href="{{ route('departement.create') }}"> Create New Artikel</a>
                     @endcan
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table id="table" class="table table-bordered">
+                        <table id="table" class="table table-responsive table-hover table-bordered">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>No</th>
@@ -34,30 +34,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $key => $permission)
+                                @foreach ($data as $key => $user)
                                 <tr>
                                     <td>{{ ++$i }}</td>
-                                    <td>{{ $permission->name }}</td>
+                                    <td>{{ $user->name }}</td>
                                     <td>
-                                        <a class="btn btn-info btn-xs" href="{{ route('permission.show',$permission->id) }}">Show</a>
-                                        @can('permission-edit')
-                                        <a class="btn btn-primary btn-xs" href="{{ route('permission.edit',$permission->id) }}">Edit</a>
+                                        <a class="btn btn-info btn-xs" href="{{ route('departement.show',$user->id) }}">Show</a>
+                                        @can('artikel-edit')
+                                        <a class="btn btn-primary btn-xs" href="{{ route('departement.edit',$user->id) }}">Edit</a>
                                         @endcan
-                                        @can('permission-delete')
-                                        {!! Form::open(['method' => 'DELETE','route' => ['permission.destroy', $permission->id],'style'=>'display:inline']) !!}
+                                        @can('artikel-delete')
+                                        {!! Form::open(['method' => 'DELETE','route' => ['departement.destroy', $user->id],'style'=>'display:inline']) !!}
                                         {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}
                                         {!! Form::close() !!}
                                         @endcan
-
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -67,7 +64,8 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#table').DataTable();
+        $('#table').DataTable({
+        });
     });
 </script>
 @stop

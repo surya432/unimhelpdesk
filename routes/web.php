@@ -29,10 +29,13 @@ Route::group(['middleware' => [ 'web', 'auth']], function () {
         Route::resource('prioritas', 'PrioritasController');
         Route::resource('status', 'StatusController');
         Route::resource('services', 'ServicesController');
+        Route::resource('services', 'ServicesController');
     });
     Route::prefix('/admin/page')->group(function () {
         Route::resource('tiket', 'TiketController');
         Route::post('tiket/$id', 'TiketController@replyTiket')->name( 'tiket.replyTiket');
+        Route::resource('artikel', 'ArtikelController');
+
     });
     Route::prefix('/admin/ajax/master/')->group(function () {
         Route::get('users', 'UserController@getDataMaster')->name('ajax.master.users');

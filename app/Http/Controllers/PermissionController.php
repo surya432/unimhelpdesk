@@ -31,9 +31,8 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Permission::orderBy('id', 'DESC')->paginate(10);
-        return view( 'admin.permission.index', compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 10);
+        $data = Permission::orderBy('id', 'DESC');
+        return view( 'admin.permission.index', compact('data'));
     }
 
 

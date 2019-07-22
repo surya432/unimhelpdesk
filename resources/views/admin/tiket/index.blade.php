@@ -39,7 +39,7 @@
                             <tbody>
                                 @foreach ($data as $key => $user)
                                 <tr>
-                                    <td>{{ ++$i }}</td>
+                                    <td>{{ $user->id }}</td>
                                     <td>{{ $user->subject }}</td>
                                     <td>{{ $user->departementName }}</td>
                                     <td>{{ $user->statusName }}</td>
@@ -60,7 +60,6 @@
                     </div>
                 </div>
             </div>
-            {!! $data->render() !!}
 
         </div>
     </div>

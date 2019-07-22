@@ -29,9 +29,8 @@ class StatusController extends Controller
      */
     public function index(Request $request)
     {
-        $data = \App\Status::orderBy('id', 'DESC')->paginate(5);
-        return view('admin.status.index', compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        $data = \App\Status::orderBy('id', 'DESC');
+        return view('admin.status.index', compact('data'));
     }
 
 

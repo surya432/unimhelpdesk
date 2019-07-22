@@ -115,19 +115,16 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ], [
-            'text'    => 'Pages',
-            'icon'    => 'book',
-            'can' => 'page-list',
-            'submenu' => [
-                [
-                    'text' => 'Tiket',
-                    'url'  => 'admin/page/tiket',
-                    'icon' => 'support',
-                    'can' => 'tiket-list',
+            'text' => 'Tiket',
+            'url'  => 'admin/page/tiket',
+            'icon' => 'support',
+            'can' => 'tiket-list',
 
-                ],
-            ],
-        ],
+        ], [
+            'text' => 'Artikel',
+            'url'  => 'admin/page/artikel',
+            'icon' => 'book',
+        ], 
         [
             'text'    => 'Master',
             'icon'    => 'database',

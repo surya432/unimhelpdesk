@@ -25,8 +25,8 @@ class DepartementController extends Controller
     public function index( Request $request)
     {
         //
-        $data = \App\Departement::paginate(5);
-        return view('admin.dept.index', compact( 'data'))->with('i', ($request->input('page', 1) - 1) * 5);
+        $data = \App\Departement::all();
+        return view('admin.dept.index', compact( 'data'));
     }
 
     /**

@@ -28,9 +28,8 @@ class PrioritasController extends Controller
      */
     public function index(Request $request)
     {
-        $data = \App\Prioritas::orderBy('id', 'DESC')->paginate(5);
-        return view( 'admin.prioritas.index', compact( 'data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        $data = \App\Prioritas::orderBy('id', 'DESC');
+        return view( 'admin.prioritas.index', compact( 'data'));
     }
 
 

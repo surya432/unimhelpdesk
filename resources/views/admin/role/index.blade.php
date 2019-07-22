@@ -60,7 +60,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                {!! $roles->render() !!}
 
             </div>
         </div>
@@ -74,7 +73,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table').DataTable({
-            paging: false,
         });
     });
 </script>

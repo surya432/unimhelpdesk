@@ -22,9 +22,8 @@ class ServicesController extends Controller
     public function index(Request $request)
     {
         //
-        $data  = \App\Services::orderBy('id', 'DESC')->paginate(5);
-        return view('admin.services.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        $data  = \App\Services::orderBy('id', 'DESC');
+        return view('admin.services.index',compact('data'));
     }
 
     /**

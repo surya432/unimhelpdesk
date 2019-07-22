@@ -33,33 +33,37 @@ class TiketController extends Controller
     public function index(Request $request)
     {
         //dd( Auth::user()->getRoleNames());
-        if ( Auth::user()->hasRole('User')) {
-            $data = \App\Tiket::join('users', 'tikets.user_id', '=',  'users.id')
-                ->join('content_tikets', 'content_tikets.id', '=',  'tikets.id')
-                ->join('departements', 'departements.id', '=',  'tikets.departement_id')
-                ->join('statuses', 'statuses.id', '=',  'tikets.status_id')
-                ->where('tikets.user_id',Auth::user()->id)
-                ->select('tikets.*', 'users.name as userName', 'departements.name as departementName', 'statuses.name as statusName')
-                ->orderBy('updated_at', 'DESC')->paginate(10);
-        } else if ( Auth::user()->hasRole("SuperAdmin")) {
-            $data = \App\Tiket::join('users', 'tikets.user_id', '=',  'users.id')
-                ->join('content_tikets', 'content_tikets.id', '=',  'tikets.id')
-                ->join('departements', 'departements.id',  '=', 'tikets.departement_id')
-                ->join('statuses', 'statuses.id', '=',  'tikets.status_id')
-                ->select('tikets.*', 'users.name as userName', 'departements.name as departementName', 'statuses.name as statusName')
-                ->orderBy('updated_at', 'DESC')->paginate(10);
-        }else{
-            $departementId = Role::where('name', Auth::user()->getRoleNames())->get();
-            $data = \App\Tiket::join('users', 'tikets.user_id', '=',  'users.id')
-                ->join('content_tikets', 'content_tikets.id', '=',  'tikets.id')
-                ->join('departements', 'departements.id',  '=', 'tikets.departement_id')
-                ->join('statuses', 'statuses.id',  '=', 'tikets.status_id')
-                ->select('tikets.*', 'users.name as userName', 'departements.name as departementName', 'statuses.name as statusName')
-                ->where('tikets.departement_id' , $departementId['0']['id'])
-                ->orderBy('updated_at', 'DESC')->paginate(10);
+        if ($request->user()->hasRole('User')) {
+            $data = \App\Tiket::where('tikets.user_id', $request->user()->id)
+                ->join('users', 'tikets.user_id', '=', 'users.id')
+                ->join('content_tikets', 'content_tikets.id', '=', 'tikets.id')
+                ->join('departements', 'departements.id', '=', 'tikets.departement_id')
+                ->join('statuses', 'statuses.id', '=', 'tikets.status_id')
+                ->join('services', 'services.id', '=', 'tikets.services_id')
+                ->join('prioritas', 'prioritas.id', '=', 'tikets.prioritas_id')
+                ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName', 'services.name as servicesName')
+                ->orderBy('tikets.updated_at', 'DESC')->get();
+        } else if ($request->user()->hasRole("SuperAdmin")) {
+            $data = \App\Tiket::join('users', 'tikets.user_id', '=', 'users.id')
+                ->join('content_tikets', 'content_tikets.id', '=', 'tikets.id')
+                ->join('departements', 'departements.id', '=', 'tikets.departement_id')
+                ->join('statuses', 'statuses.id', '=', 'tikets.status_id')
+                ->join('services', 'services.id', '=', 'tikets.services_id')
+                ->join('prioritas', 'prioritas.id', '=', 'tikets.prioritas_id')
+                ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName', 'services.name as servicesName')
+                ->orderBy('tikets.updated_at', 'DESC')->get();
+        } else {
+            $departementId = Role::where('name', $request->user()->getRoleNames())->get();
+            $data = \App\Tiket::where('tikets.departement_id', $departementId['0']['id'])
+                ->join('content_tikets', 'content_tikets.id', '=', 'tikets.id')
+                ->join('departements', 'departements.id', '=', 'tikets.departement_id')
+                ->join('statuses', 'statuses.id', '=', 'tikets.status_id')
+                ->join('services', 'services.id', '=', 'tikets.services_id')
+                ->join('prioritas', 'prioritas.id', '=', 'tikets.prioritas_id')
+                ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName', 'services.name as servicesName')
+                ->orderBy('tikets.updated_at', 'DESC')->get();
         }
-        return view('admin.tiket.index', compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('admin.tiket.index', compact('data'));
     }
 
 

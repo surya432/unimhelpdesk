@@ -68,7 +68,6 @@
                     </div>
                 </div>
             </div>
-            {!! $data->render() !!}
 
         </div>
     </div>
@@ -78,7 +77,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table').DataTable({
-            paging: false,
         });
     });
 </script>
