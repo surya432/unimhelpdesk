@@ -29,7 +29,7 @@
 @endif
 
 
-{!! Form::open(array('route' => 'artikel.store','method'=>'PATCH')) !!}
+{!! Form::open(array('route' => 'artikel.store','method'=>'POST')) !!}
 {{Form::hidden('departement_id',$data, array('id' => 'departement_id')) }}
 {{Form::hidden('created_by',$name, array('id' => 'created_by')) }}
 
