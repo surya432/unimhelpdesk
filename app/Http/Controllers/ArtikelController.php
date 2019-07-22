@@ -26,7 +26,7 @@ class ArtikelController extends Controller
         //
         $departementId = Role::where('name', $request->user()->getRoleNames())->get();
         $data = $departementId['0']['id'];
-        $data = \App\Artikel::where('departement_id')->orderBy('updated_at', 'DESC')->get();
+        $data = \App\Artikel::where('departement_id',$data)->orderBy('updated_at', 'DESC')->get();
         return view('admin.artikel.index', compact('data'));
     }
 
