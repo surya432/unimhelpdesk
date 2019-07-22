@@ -36,7 +36,7 @@
                             <tbody>
                                 @foreach ($data as $key => $user)
                                 <tr>
-                                    <td>{{ ++$i }}</td>
+                                    <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>
                                         <a class="btn btn-info btn-xs" href="{{ route('prioritas.show',$user->id) }}">Show</a>
@@ -64,8 +64,7 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#table').DataTable({
-        });
+        $('#table').DataTable({});
     });
 </script>
 @stop

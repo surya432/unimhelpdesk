@@ -25,7 +25,7 @@ class DepartementController extends Controller
     public function index( Request $request)
     {
         //
-        $data = \App\Departement::all();
+        $data = \App\Departement::orderBy('id', 'desc')->get();;
         return view('admin.dept.index', compact( 'data'));
     }
 
@@ -102,7 +102,7 @@ class DepartementController extends Controller
      * @param  \App\Departement  $departement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Departement $departement)
+    public function destroy($id)
     {
         //
         DB::table("roles")->where('id', $id)->delete();

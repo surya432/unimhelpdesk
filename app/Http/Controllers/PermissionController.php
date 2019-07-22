@@ -31,7 +31,7 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Permission::orderBy('id', 'DESC');
+        $data = Permission::orderBy('id', 'DESC')->get();
         return view( 'admin.permission.index', compact('data'));
     }
 

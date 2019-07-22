@@ -89,9 +89,7 @@
         $.extend($.fn.dataTable.defaults, {
             //serverSide: true,
             processing: true,
-            paging:false,
-            pageLength: 50,
-            dom: 'Bfrtip',
+            pageLength: 20,
             dom: 'Bfrtip',
             buttons: [{
                     extend: 'copyHtml5',

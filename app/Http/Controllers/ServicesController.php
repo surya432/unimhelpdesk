@@ -22,7 +22,7 @@ class ServicesController extends Controller
     public function index(Request $request)
     {
         //
-        $data  = \App\Services::orderBy('id', 'DESC');
+        $data  = \App\Services::orderBy('id', 'DESC')->get();
         return view('admin.services.index',compact('data'));
     }
 

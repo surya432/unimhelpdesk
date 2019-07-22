@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Artikel;
 use Illuminate\Http\Request;
+use DB;
+use Spatie\Permission\Models\Role;
 
 class ArtikelController extends Controller
 {
@@ -22,7 +24,9 @@ class ArtikelController extends Controller
     public function index(Request $request)
     {
         //
-        $data = \App\Artikel::orderBy('updated_at','DESC');
+        $departementId = Role::where('name', $request->user()->getRoleNames())->get();
+        $data = $departementId['0']['id'];
+        $data = \App\Artikel::where('departement_id')->orderBy('updated_at', 'DESC')->get();
         return view('admin.artikel.index', compact('data'));
     }
 
@@ -31,9 +35,13 @@ class ArtikelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $departementId = Role::where('name', $request->user()->getRoleNames())->get();
+        $data = $departementId['0']['id'];
+        $name = $request->user()->name;
+        return view('admin.artikel.create', compact('data','name'));
     }
 
     /**
@@ -45,6 +53,15 @@ class ArtikelController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'name' => 'required',
+            'body' => 'required',
+            'created_by' => 'required',
+            'departement_id' => 'required'
+        ]);
+        $user = \App\Artikel::create($request->all());
+        return redirect()->route('artikel.index')
+            ->with('success', 'Artikel created successfully');
     }
 
     /**
@@ -53,9 +70,13 @@ class ArtikelController extends Controller
      * @param  \App\Artikel  $artikel
      * @return \Illuminate\Http\Response
      */
-    public function show(Artikel $artikel)
+    public function show(Request $request,$id)
     {
         //
+
+     
+        $datacontent = \App\Artikel::find($id);
+        return view('admin.artikel.show', compact('datacontent'));
     }
 
     /**
@@ -64,9 +85,14 @@ class ArtikelController extends Controller
      * @param  \App\Artikel  $artikel
      * @return \Illuminate\Http\Response
      */
-    public function edit(Artikel $artikel)
+    public function edit(Request $request, $id)
     {
         //
+        $departementId = Role::where('name', $request->user()->getRoleNames())->get();
+        $data = $departementId['0']['id'];
+        $name = $request->user()->name;
+        $datacontent = \App\Artikel::find($id);
+        return view('admin.artikel.edit', compact('datacontent'));
     }
 
     /**
@@ -76,9 +102,23 @@ class ArtikelController extends Controller
      * @param  \App\Artikel  $artikel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Artikel $artikel)
+    public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            'name' => 'required',
+            'body' => 'required',
+            'created_by' => 'required',
+            'departement_id' => 'required'
+        ]);
+        $content = \App\Artikel::find($id);
+        $content->name = $request->input('name');
+        $content->body = $request->input('body');
+        $content->created_by = $request->input('created_by');
+        $content->departement_id = $request->input('departement_id');
+        $content->save();
+        return redirect()->route('artikel.index')
+            ->with('success', 'Artikel Updated successfully');
     }
 
     /**
@@ -87,8 +127,11 @@ class ArtikelController extends Controller
      * @param  \App\Artikel  $artikel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Artikel $artikel)
+    public function destroy($id)
     {
         //
+        DB::table("artikels")->where('id', $id)->delete();
+        return redirect()->route('artikel.index')
+            ->with('success', 'Artikel deleted successfully');
     }
 }

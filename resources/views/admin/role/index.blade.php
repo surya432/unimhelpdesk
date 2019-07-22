@@ -42,7 +42,7 @@
                     <tbody>
                         @foreach ($roles as $key => $role)
                         <tr>
-                            <td>{{ ++$i }}</td>
+                            <td>{{ $role->id }}</td>
                             <td>{{ $role->name }}</td>
                             <td>
                                 <a class="btn btn-info btn-xs" href="{{ route('roles.show',$role->id) }}">Show</a>
@@ -72,8 +72,7 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#table').DataTable({
-        });
+        $('#table').DataTable({});
     });
 </script>
 @stop

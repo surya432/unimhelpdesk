@@ -28,7 +28,7 @@ class PrioritasController extends Controller
      */
     public function index(Request $request)
     {
-        $data = \App\Prioritas::orderBy('id', 'DESC');
+        $data = \App\Prioritas::orderBy('id', 'DESC')->get();
         return view( 'admin.prioritas.index', compact( 'data'));
     }
 

@@ -29,7 +29,7 @@ class StatusController extends Controller
      */
     public function index(Request $request)
     {
-        $data = \App\Status::orderBy('id', 'DESC');
+        $data = \App\Status::orderBy('id', 'DESC')->get();
         return view('admin.status.index', compact('data'));
     }
 

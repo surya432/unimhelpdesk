@@ -38,7 +38,7 @@
                             <tbody>
                                 @foreach ($data as $key => $user)
                                 <tr>
-                                    <td>{{ ++$i }}</td>
+                                    <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
@@ -76,8 +76,7 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#table').DataTable({
-        });
+        $('#table').DataTable({});
     });
 </script>
 @stop

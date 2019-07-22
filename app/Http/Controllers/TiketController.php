@@ -55,6 +55,7 @@ class TiketController extends Controller
         } else {
             $departementId = Role::where('name', $request->user()->getRoleNames())->get();
             $data = \App\Tiket::where('tikets.departement_id', $departementId['0']['id'])
+                ->join('users', 'tikets.user_id', '=', 'users.id')
                 ->join('content_tikets', 'content_tikets.id', '=', 'tikets.id')
                 ->join('departements', 'departements.id', '=', 'tikets.departement_id')
                 ->join('statuses', 'statuses.id', '=', 'tikets.status_id')

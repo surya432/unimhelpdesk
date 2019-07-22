@@ -4,40 +4,38 @@
 
 @section('content_header')
 <div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>{{$tiket->subject}}</h2>
-        </div>
-        @can('tiket-list')
-        <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('tiket.index') }}"> Back</a>
-        </div>
-        @endcan
-    </div>
-
-
-
-    @if (count($errors) > 0)
-    <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-
-
-    @if(Session::has('success'))
-    <div class="alert alert-success">
-        {{ Session::get('success')}}
-    </div>
-    @endif
-
-
 
     <div class="col-lg-12">
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2>{{$tiket->subject}}</h2>
+            </div>
+            @can('tiket-list')
+            <div class="pull-right">
+                <a class="btn btn-primary" href="{{ route('tiket.index') }}"> Back</a>
+            </div>
+            @endcan
+        </div>
+        <div class='col-lg-12'>
+            @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
+
+            @if(Session::has('success'))
+            <div class="alert alert-success">
+                {{ Session::get('success')}}
+            </div>
+            @endif
+        </div>
+
         <div class="col-xs-4 col-sm-4 col-md-4">
             <div class="form-group">
                 <div class="panel panel-primary">

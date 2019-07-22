@@ -20,7 +20,7 @@
                 <div class="panel-heading">
                     List Artikel
                     @can('artikel-create')
-                    <a class="btn btn-success btn-sm" href="{{ route('departement.create') }}"> Create New Artikel</a>
+                    <a class="btn btn-success btn-sm" href="{{ route('artikel.create') }}"> Create New Artikel</a>
                     @endcan
                 </div>
                 <div class="panel-body">
@@ -36,15 +36,15 @@
                             <tbody>
                                 @foreach ($data as $key => $user)
                                 <tr>
-                                    <td>{{ ++$i }}</td>
+                                    <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>
-                                        <a class="btn btn-info btn-xs" href="{{ route('departement.show',$user->id) }}">Show</a>
+                                        <a class="btn btn-info btn-xs" href="{{ route('artikel.show',$user->id) }}">Show</a>
                                         @can('artikel-edit')
-                                        <a class="btn btn-primary btn-xs" href="{{ route('departement.edit',$user->id) }}">Edit</a>
+                                        <a class="btn btn-primary btn-xs" href="{{ route('artikel.edit',$user->id) }}">Edit</a>
                                         @endcan
                                         @can('artikel-delete')
-                                        {!! Form::open(['method' => 'DELETE','route' => ['departement.destroy', $user->id],'style'=>'display:inline']) !!}
+                                        {!! Form::open(['method' => 'DELETE','route' => ['artikel.destroy', $user->id],'style'=>'display:inline']) !!}
                                         {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}
                                         {!! Form::close() !!}
                                         @endcan
@@ -64,8 +64,7 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#table').DataTable({
-        });
+        $('#table').DataTable({});
     });
 </script>
 @stop

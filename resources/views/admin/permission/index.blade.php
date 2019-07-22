@@ -36,7 +36,7 @@
                             <tbody>
                                 @foreach ($data as $key => $permission)
                                 <tr>
-                                    <td>{{ ++$i }}</td>
+                                    <td>{{ $permission->id }}</td>
                                     <td>{{ $permission->name }}</td>
                                     <td>
                                         <a class="btn btn-info btn-xs" href="{{ route('permission.show',$permission->id) }}">Show</a>

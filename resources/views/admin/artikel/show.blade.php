@@ -1,19 +1,19 @@
 @extends('adminlte::page')
 
-@section('title', 'Master Departement')
+@section('title', 'Master Artikel')
 
 @section('content_header')
-<h1>Master Departement</h1>
+<h1>Master Artikel</h1>
 @stop
 
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2> Show Departement</h2>
+            <h2> Show Artikel</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('departement.index') }}"> Back</a>
+            <a class="btn btn-primary" href="{{ route('artikel.index') }}"> Back</a>
         </div>
     </div>
 </div>
@@ -21,10 +21,11 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Name:</strong>
-            {{ $departement->name }}
-        </div>
+
+        <strong>{{ $datacontent->name }}</strong>
+        {!! $datacontent->body !!}
+        {!! $datacontent->created_by !!}
+
     </div>
 </div>
 
