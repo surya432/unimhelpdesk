@@ -11,7 +11,7 @@ class Content_tiket extends Model
         'body', 'tiket_id', 'senders', 
     ];
   
-     public function attachmentFile()
+    public function attachmentFile()
     {
         return $this->hasMany('App\Attachment', 'content_tiket_id', 'id');
     }

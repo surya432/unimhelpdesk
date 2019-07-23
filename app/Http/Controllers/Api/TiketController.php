@@ -27,7 +27,7 @@ class TiketController extends Controller
                 return response()->json(["status" => "success", 'data' => \App\Prioritas::all()]);
                 break;
             case "artikel":
-                return response()->json(["status" => "success", 'data' => \App\Artikel::all()]);
+                return response()->json(["status" => "success", 'data' => \App\Artikel::orderBy('updated_at','Desc')->get()]);
                 break;
             case "tiket":
                 return response()->json(["status" => "success", 'data' => $this->getDataTiket($request)]);
