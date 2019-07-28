@@ -139,6 +139,7 @@
 
         </div>
         {!! Form::close() !!}
+        @if(!empty($repply->attachment()))
         @foreach ($contentTiket as $repply)
         <div class="col-lg-12">
             <div class="panel panel-primary">
@@ -147,10 +148,16 @@
                 </div>
                 <div class="panel-body">
                     {!! $repply->body!!}
+                    @if(!empty($repply->attachmentFile))
+                    @foreach($repply->attachmentFile as $v)
+                    <label class="badge badge-success">{{ $v }}</label>
+                    @endforeach
+                    @endif
                 </div>
             </div>
         </div>
         @endforeach
+        @endif
     </div>
 
 </div>

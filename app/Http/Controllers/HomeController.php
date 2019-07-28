@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use auth;
+use Carbon\Carbon;
+
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 class HomeController extends Controller
 {
     /**
@@ -27,6 +31,16 @@ class HomeController extends Controller
         //     Auth::logout();
         //     return redirect('/login');
         // }
-        return view('home');
+        $fromDate = Carbon::now()->startOfMonth();
+        $tillDate = Carbon::now()->endOfMonth();
+
+        $date = \Carbon\Carbon::today()->subDays(30);
+        $userCount = \App\User::role('User')->count();
+        $openCount = \App\Tiket::join('statuses', 'statuses.id', '=', 'tikets.status_id')
+            ->where('statuses.name', 'Open')->count();
+        $closedCount = \App\Tiket::join('statuses', 'statuses.id', '=', 'tikets.status_id')
+            ->where('statuses.name', 'Closed')->count(); 
+        $countTiketMasuk = \App\Tiket::whereBetween('created_at', [$fromDate, $tillDate])->count();
+        return view('home',compact('userCount', 'closedCount', 'openCount', 'countTiketMasuk'));
     }
 }

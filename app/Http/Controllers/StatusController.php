@@ -70,9 +70,9 @@ class StatusController extends Controller
      */
     public function show($id)
     {
-        $role = \App\Status::find($id);
+        $status  = \App\Status::find($id);
 
-        return view('admin.status.show', compact('role'));
+        return view('admin.status.show', compact('status'));
     }
 
 

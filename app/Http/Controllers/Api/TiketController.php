@@ -42,8 +42,17 @@ class TiketController extends Controller
                 return response()->json(["status" => "failed", 'data' => "null"], 404);
         }
     }
-    private function getTiketBody($request)
-    { }
+    public function closedTiket($request)
+    {
+        if ($request->input('tiket_id')) {
+            $tiket = \App\Tiket::find($request->input('tiket_id'));
+            $tiket->status_id = $request->input('status_id');
+            $tiket->save();
+            return response()->json(["status" => "success"], 200);
+        }
+        return response()->json(["status" => "failed", 'msg' => "tiket_id"], 404);
+
+     }
     private function getDataTiket($request)
     {
         if ($request->user()->hasRole('User')) {
@@ -105,7 +114,7 @@ class TiketController extends Controller
         if ($request->hasFile('attachment')) {
             foreach ($request->file('attachment') as $file) {
                 $name = md5(now()) . $file->getClientOriginalName();
-                $upload_success = $file->move(public_path('attachment'), $name);
+                $file->move(public_path('attachment'), $name);
                 $mime = $file->getClientMimeType();
                 try {
                     $mime = $file->getMimeType();
@@ -139,10 +148,9 @@ class TiketController extends Controller
             foreach ($request->file('attachment') as $file) {
                 $name = md5(now()) . $file->getClientOriginalName();
                 $upload_success = $file->move(public_path('attachment'), $name);
-                //Storage::disk( 'attachment')->put($name, file_get_contents( $file->getRealPath()));
                 \App\Attachment::create(["name" => $name, "file" => url("attachment/$name"), "content_tiket_id" => $content->id]);
             }
         }
-        return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('content_tikets.tiket_id', $request->input("tiketId"))->with('attachmentFile')->get()]);
+        return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('content_tikets.tiket_id', $request->input("tiket_id"))->with('attachmentFile')->get()]);
     }
 }

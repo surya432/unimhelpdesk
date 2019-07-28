@@ -69,9 +69,9 @@ class PrioritasController extends Controller
      */
     public function show($id)
     {
-        $role = \App\Prioritas::find($id);
+        $departement  = \App\Prioritas::find($id);
 
-        return view('admin.prioritas.show', compact('role'));
+        return view('admin.prioritas.show', compact('departement'));
     }
 
 

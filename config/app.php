@@ -186,6 +186,8 @@ return [
         Unisharp\Ckeditor\ServiceProvider::class,
         Laravolt\Avatar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
+
 
     ],
 
