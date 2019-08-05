@@ -8,7 +8,9 @@ use Auth;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Storage;
-
+use GuzzleHttp\Client as client;
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Psr7\Response as guzzleResponse;    
 class TiketController extends Controller
 {
     /**
@@ -150,8 +152,7 @@ class TiketController extends Controller
             ->join('statuses', 'statuses.id', 'tikets.status_id')
             ->join('prioritas', 'prioritas.id', 'tikets.prioritas_id')
             ->where('tikets.id', $id)
-            //->with('RepplyTiket')
-
+            ->with('RepplyTiket')
             ->select('tikets.*','users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
             ->first();
         return view('admin.tiket.show', compact( 'tiket', 'contentTiket', 'status'));
@@ -234,5 +235,32 @@ class TiketController extends Controller
         }
         return redirect()->back()
             ->with('success', 'tiket updated successfully');
+    }
+    public function push(Request $request)
+    {
+        $message = [
+            // 'notification' => $request->notification,
+            "data" => $request->data,
+            'to' => $request->client_api,
+            // 'android'=>[
+            //     "priority"=>"high"
+            // ]
+
+        ];
+        $client = new client;
+        try {
+            $response = $client->request('post', "https://fcm.googleapis.com/fcm/send", [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => "key=$request->server_api",
+                ],
+                'body' => json_encode($message)
+            ]);
+        } catch (BadResponseException $ex) {
+            $response = $ex->getResponse();
+            return $response;
+        }
+        $response = json_decode((string) $response->getBody(), true);
+        return $response;
     }
 }
