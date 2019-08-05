@@ -150,7 +150,7 @@
                     {!! $repply->body!!}
                     @if(!empty($repply->attachmentFile))
                     @foreach($repply->attachmentFile as $v)
-                    <label class="badge badge-success">{{ $v }}</label>
+                    <label class="badge badge-success"><a href="{{ $v->url }}" target="_blank">{{ $v->name }}</a></label>
                     @endforeach
                     @endif
                 </div>
