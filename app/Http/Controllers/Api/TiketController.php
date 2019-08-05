@@ -42,7 +42,7 @@ class TiketController extends Controller
                 return response()->json(["status" => "failed", 'data' => "null"], 404);
         }
     }
-    public function closedTiket($request)
+    public function closedTiket(Request $request)
     {
         if ($request->input('tiket_id')) {
             $tiket = \App\Tiket::find($request->input('tiket_id'));
