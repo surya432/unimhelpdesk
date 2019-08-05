@@ -139,7 +139,7 @@
 
         </div>
         {!! Form::close() !!}
-        @if(!empty($repply->attachment()))
+        @if(!empty($contentTiket ))
         @foreach ($contentTiket as $repply)
         <div class="col-lg-12">
             <div class="panel panel-primary">
