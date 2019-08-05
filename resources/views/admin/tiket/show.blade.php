@@ -147,10 +147,10 @@
                     {{ $repply->senders}}
                 </div>
                 <div class="panel-body">
-                    {!! $repply->body!!}<br/>
+                    {!! $repply->body!!}<br />
                     @if(!empty($repply->attachmentFile))
                     @foreach($repply->attachmentFile as $v)
-                    <label class="badge badge-success"><a href="/{{ $v->file }}" target="_blank">{{ $v->name }}</a></label>
+                    <label class="badge badge-success"><a href="http://40.113.217.81/unimhelpdesk/public/{{ $v->file }}" target="_blank">{{ $v->name }}</a></label>
                     @endforeach
                     @endif
                 </div>
