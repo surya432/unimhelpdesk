@@ -114,7 +114,8 @@ class TiketController extends Controller
             foreach ($request->file('attachment') as $file) {
                 $name = md5(now()) . $file->getClientOriginalName();
                 $file->move(public_path('attachment'), $name);
-                $mime = $file->getClientMimeType();
+                //$mime = $file->getClientMimeType();
+                $mime = $file->getClientMimeType() ? $file->getClientMimeType() : "file";
                 try {
                     $mime = $file->getMimeType();
                 } catch (\Exception $e) {
