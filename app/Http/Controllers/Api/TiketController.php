@@ -38,18 +38,6 @@ class TiketController extends Controller
             case "tiketContent":
                 return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('content_tikets.tiket_id', $request->input("tiketId"))->with('attachmentFile')->get()]);
                 break;
-            case "closedTiket":
-                $this->validate($request, [
-                    'status_id' => 'required',
-                    'id' => 'required',
-                ]);
-
-                $tiket = \App\Tiket::find($request->input('id'));
-                $tiket->status_id = $request->input('status_id');
-                $tiket->save();
-                return response()->json(["status" => "success", 'data' => "Berhasil Di Simpan"]);
-
-                break;
             default:
                 return response()->json(["status" => "failed", 'data' => "null"], 404);
         }
