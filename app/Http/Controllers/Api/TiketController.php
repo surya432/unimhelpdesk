@@ -38,9 +38,21 @@ class TiketController extends Controller
             case "tiketContent":
                 return response()->json(["status" => "success", 'data' => \App\Content_tiket::where('content_tikets.tiket_id', $request->input("tiketId"))->with('attachmentFile')->get()]);
                 break;
+            case "TokenFCM":
+                
+                return response()->json(["status" => "success", 'data' => $this->getDataTokenFCM($request)]);
+                break;
             default:
                 return response()->json(["status" => "failed", 'data' => "null"], 404);
         }
+    }
+    private function getDataTokenFCM(Request $request){
+        $data = \App\User::find($request->input('id'));
+        if($request->input('tokenFCM') != $data->tokenFCM){
+            $data->tokenFCM = $request->input('tokenFCM');
+            $data->save();
+        }
+        return $data;
     }
     public function closedTiket(Request $request)
     {
