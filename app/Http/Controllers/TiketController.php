@@ -240,31 +240,54 @@ class TiketController extends Controller
     }
     public function push(Request $request)
     {
-        $tiketId= $request->input('tiket_id');
+        $tiketId = $request->input('tiket_id');
         $tiket = \App\Tiket::find($tiketId);
-        $message = [
+        $user = \App\User::find($tiket->user_id);
+        $res = array();
+        $res['DataFCM'] = $tiket->id;
+        $name =  $request->input('senders');
+        $res['repply'] = "$name Membalas Tiket";
+
+        $message = array(
             // 'notification' => $request->notification,
-            "data" => "{'DATAFCM':'$tiketId'}",
-            'to' => $tiket['token'],
+            "data" => $res,
+            'to' => $user['tokenfcm'],
             // 'android'=>[
             //     "priority"=>"high"
             // ]
 
-        ];
-        $client = new client;
+        );
         try {
-            $response = $client->request('post', "https://fcm.googleapis.com/fcm/send", [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => "key=AIzaSyCW6NdQK_uJmUCzGal16lgkgrInC74pLD0",
-                ],
-                'body' => json_encode($message)
-            ]);
+            $url = "https://fcm.googleapis.com/fcm/send";
+            $headers = array(
+                'Authorization: key=AIzaSyCW6NdQK_uJmUCzGal16lgkgrInC74pLD0',
+                'Content-Type: application/json'
+            );
+            // Open connection
+            $ch = curl_init();
+            // Set the url, number of POST vars, POST data
+            curl_setopt($ch, CURLOPT_URL, $url);
+
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            // Disabling SSL Certificate support temporarly
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($message));
+
+            // Execute post
+            $result = curl_exec($ch);
+            if ($result === FALSE) {
+                die('Curl failed: ' . curl_error($ch));
+            }
+
+            // Close connection
+            curl_close($ch);
         } catch (BadResponseException $ex) {
             $response = $ex->getResponse();
             return $response;
         }
-        $response = json_decode((string) $response->getBody(), true);
-        return $response;
     }
 }
