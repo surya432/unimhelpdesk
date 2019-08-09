@@ -10,7 +10,8 @@ use Spatie\Permission\Models\Role;
 use Storage;
 use GuzzleHttp\Client as client;
 use GuzzleHttp\Exception\BadResponseException;
-use GuzzleHttp\Psr7\Response as guzzleResponse;    
+use GuzzleHttp\Psr7\Response as guzzleResponse;
+
 class TiketController extends Controller
 {
     /**
@@ -83,11 +84,11 @@ class TiketController extends Controller
             ->join('roles', 'roles.id', 'model_has_roles.role_id')
             ->select('users.name', "users.id")
             ->where('roles.name', 'User')->get();
-       
+
         $prioritas = \App\Prioritas::all();
         $status = \App\Status::all();
         $services = \App\Services::all();
-        $departement =Role::whereNotIn('name', ['SuperAdmin', 'User'])->get();
+        $departement = Role::whereNotIn('name', ['SuperAdmin', 'User'])->get();
         return view('admin.tiket.create', compact('user', 'prioritas', 'status', 'departement', 'services'));
     }
 
@@ -112,26 +113,26 @@ class TiketController extends Controller
             'attachment' => 'max:5000',
 
         ]);
-            $tiket = \App\Tiket::create($request->only('subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id', 'services_id'));
-            $content = new \App\Content_tiket;
-            $content->body = $request->input('body');
-            $content->senders = $request->input('senders');
-            $content->tiket_id = $tiket->id;
-            $content->repply = $request->input('repply');
-         
-            $content->save();
-            if( $request->hasFile( 'attachment')){
-                foreach ($request->file( 'attachment') as $file) {
-                    $name = md5(now()).$file->getClientOriginalName();
-                    $upload_success = $file->move( public_path( 'attachment'), $name);
+        $tiket = \App\Tiket::create($request->only('subject', 'user_id', 'prioritas_id', 'status_id', 'departement_id', 'services_id'));
+        $content = new \App\Content_tiket;
+        $content->body = $request->input('body');
+        $content->senders = $request->input('senders');
+        $content->tiket_id = $tiket->id;
+        $content->repply = $request->input('repply');
+
+        $content->save();
+        if ($request->hasFile('attachment')) {
+            foreach ($request->file('attachment') as $file) {
+                $name = md5(now()) . $file->getClientOriginalName();
+                $upload_success = $file->move(public_path('attachment'), $name);
                 try {
                     $mime = $file->getMimeType();
                 } catch (\Exception $e) {
                     $mime = $file->getClientMimeType();
                 }
                 \App\Attachment::create(["name" => $name, "file" => "attachment/$name", "mime" =>  $mime, "content_tiket_id" => $content->id]);
-                }
             }
+        }
 
         return redirect()->route('tiket.index')
             ->with('success', 'tiket created successfully');
@@ -143,8 +144,8 @@ class TiketController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {        
-        $contentTiket = \App\Content_tiket::where('tiket_id', $id)->orderBy('id',"DESC")->with('attachmentFile')->get();
+    {
+        $contentTiket = \App\Content_tiket::where('tiket_id', $id)->orderBy('id', "DESC")->with('attachmentFile')->get();
         $status = \App\Status::all();
         $tiket = \App\Tiket::join('users', 'tikets.user_id', 'users.id')
             //->join('content_tikets', 'content_tikets.id', 'tikets.id')
@@ -153,9 +154,9 @@ class TiketController extends Controller
             ->join('prioritas', 'prioritas.id', 'tikets.prioritas_id')
             ->where('tikets.id', $id)
             ->with('RepplyTiket')
-            ->select('tikets.*','users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
+            ->select('tikets.*', 'users.name as userName', 'prioritas.name as prioritasName', 'departements.name as departementName', 'statuses.name as statusName')
             ->first();
-        return view('admin.tiket.show', compact( 'tiket', 'contentTiket', 'status'));
+        return view('admin.tiket.show', compact('tiket', 'contentTiket', 'status'));
     }
 
 
@@ -188,7 +189,7 @@ class TiketController extends Controller
 
 
         $tiket = \App\Tiket::find($id);
-        $tiket-> status_id = $request->input( 'status_id');
+        $tiket->status_id = $request->input('status_id');
         $tiket->save();
 
 
@@ -208,7 +209,8 @@ class TiketController extends Controller
             ->with('success', 'tiket deleted successfully');
     }
 
-    public function replyTiket(Request $request){
+    public function replyTiket(Request $request)
+    {
         $this->validate($request, [
             'body' => 'required',
             'senders' => 'required',
@@ -217,15 +219,15 @@ class TiketController extends Controller
             'attachment' => 'max:5000',
         ]);
 
-         $content = new \App\Content_tiket;
-            $content->body = $request->input('body');
-            $content->senders = $request->input('senders');
-            $content->tiket_id = $request->input('tiket_id');
-            $content->repply = $request->input('repply');
-            $content->save();
-
-            \App\Tiket::find($request->input('tiket_id'))->touch();
-         if ($request->hasFile('attachment')) {
+        $content = new \App\Content_tiket;
+        $content->body = $request->input('body');
+        $content->senders = $request->input('senders');
+        $content->tiket_id = $request->input('tiket_id');
+        $content->repply = $request->input('repply');
+        $content->save();
+        $this->push($request);
+        \App\Tiket::find($request->input('tiket_id'))->touch();
+        if ($request->hasFile('attachment')) {
             foreach ($request->file('attachment') as $file) {
                 $name = md5(now()) . $file->getClientOriginalName();
                 $upload_success = $file->move(public_path('attachment'), $name);
@@ -238,10 +240,12 @@ class TiketController extends Controller
     }
     public function push(Request $request)
     {
+        $tiketId= $request->input('tiket_id');
+        $tiket = \App\Tiket::find($tiketId);
         $message = [
             // 'notification' => $request->notification,
-            "data" => $request->data,
-            'to' => $request->client_api,
+            "data" => "{'DATAFCM':'$tiketId'}",
+            'to' => $tiket['token'],
             // 'android'=>[
             //     "priority"=>"high"
             // ]
@@ -252,7 +256,7 @@ class TiketController extends Controller
             $response = $client->request('post', "https://fcm.googleapis.com/fcm/send", [
                 'headers' => [
                     'Content-Type' => 'application/json',
-                    'Authorization' => "key=$request->server_api",
+                    'Authorization' => "key=AIzaSyCW6NdQK_uJmUCzGal16lgkgrInC74pLD0",
                 ],
                 'body' => json_encode($message)
             ]);
