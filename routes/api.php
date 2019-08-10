@@ -21,4 +21,9 @@ Route::group(['middleware' => [ 'auth:api']], function () {
     Route::post('/reply', 'Api\TiketController@replyTiket')->name('replyTiketTiketApi');
     Route::post('/closedTiket', 'Api\TiketController@closedTiket')->name('closedTiketApi');
 
+    Route::get('/master', 'Api\TiketController@getMaster')->name('getgetMaster');
+    Route::get('/createTiket', 'Api\TiketController@store')->name('getcreateTiketApi');
+    Route::get('/reply', 'Api\TiketController@replyTiket')->name('getreplyTiketTiketApi');
+    Route::get('/closedTiket', 'Api\TiketController@closedTiket')->name('getclosedTiketApi');
+
 });
