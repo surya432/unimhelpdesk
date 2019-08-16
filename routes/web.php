@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+//Route::get('/stem', 'HelperController@index')->name('stem');
 
 Auth::routes();
 Route::post('deploy', 'DeployController@deploy');
@@ -37,6 +38,7 @@ Route::group(['middleware' => [ 'web', 'auth']], function () {
         Route::resource('artikel', 'ArtikelController');
 
     });
+    
     Route::prefix('/admin/ajax/master/')->group(function () {
         Route::get('users', 'UserController@getDataMaster')->name('ajax.master.users');
         Route::post('users', 'UserController@create')->name('ajax.master.users');

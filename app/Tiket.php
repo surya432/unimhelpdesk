@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Tiket extends Model
 {
     //
+    //$this->train('komplain', 'kipas rusak kok tidak di perbaiki');
+    //$this->train('komplain', 'kipas tidak mau nyala ini rusak');
     protected $fillable = [
         'subject', 'user_id', 'prioritas_id', 'services_id', 'status_id', 'departement_id', 'rate',
     ];
