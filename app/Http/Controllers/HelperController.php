@@ -62,13 +62,17 @@ trait HelperController
         }
         $this->docs[$label]++;
     }
-    function classify($text)
+    function classify($text, $tiket_id)
     {
         $totalDocCount = array_sum($this->docs);
         $kataDasar = $this->kataDasar($text);
         $tokens = $this->tokenize($kataDasar);
         $datahasil = array();
         $scores = array();
+        $dataHasilHitung = array();
+        $datahasil['words'] = $text;
+        $datahasil['keysword'] = $kataDasar;
+        $datahasil['tiket_id'] = $tiket_id;
         foreach ($this->labels as $label => $labelCount) {
             $logSum = 0;
             $docCount = $this->docs[$label];
@@ -96,17 +100,23 @@ trait HelperController
                 $logSum += log(1 - $probability) - log($probability);
             }
             $data = 1 / (1 + exp($logSum));
-            // $datab = array("name"=>$label,"total"=>$data);
-            // array_push($scores,$datab);
-            $scores[$label]=$data;
+            $datab = array("keys"=> $label, "values" => $data);
+            array_push($dataHasilHitung, $datab);
+            $scores[$label]= $data;
         }
+
         arsort($scores, SORT_NUMERIC);
         $sortPrediksi = array_keys($scores, max($scores));
-        $datahasil['HasilPrediksi'] = $sortPrediksi[0];
-        $datahasil['Words'] = $text;
-        $datahasil['Keysword'] = $kataDasar;
-        $datahasil['dataHasil'] = $scores;
+        $datahasil['hasilPrediksi'] = $sortPrediksi[0];
+        $datahasil['dataHasil'] = $dataHasilHitung;
+        foreach($dataHasilHitung as $b=>$c ){
+            //\App\TrainingHasil::create($c);
+        }
         return $datahasil;
+    }
+    function numberlimit($hasilOutputZ)
+    {
+        return number_format($hasilOutputZ, 5, '.', '');
     }
     function reset()
     {

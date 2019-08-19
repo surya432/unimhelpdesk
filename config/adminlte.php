@@ -124,6 +124,10 @@ return [
             'text' => 'Artikel',
             'url'  => 'admin/page/artikel',
             'icon' => 'book',
+        ], [
+            'text' => 'Bayes',
+            'url'  => 'admin/page/bayes',
+            'icon' => 'database',
         ], 
         [
             'text'    => 'Master',

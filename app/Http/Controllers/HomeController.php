@@ -35,25 +35,17 @@ class HomeController extends Controller
         //     return redirect('/login');
         // }
         $this->reset();
-        $this->train('perwalian', 'kapan krs kita');
-        $this->train('perwalian', 'kapan terakhir krs dan perwalian');
-        $this->train('siakad', 'kapan perwalian');
-        $this->train('biaya', 'kapan terakhir pembayaran her registrasi');
-        $this->train('siakad', 'kapan uts dimulai');
-        $this->train('biaya', 'berapa biaya krs');
-        $this->train('biaya', 'kapan mulai kuliah?');
-        $this->train('perwalian', 'terkahir perwalian kapan');
-        $this->train('perwalian', 'kapan perwalian krs');
-        $this->train('komplain', 'kipas rusak kok tidak di perbaiki');
-        $this->train('komplain', 'kipas tidak mau nyala ini rusak');
-        $this->train('komplain', 'bayar mahal fasilitas kurang, rusak');
-        $this->train('komplain', 'bisa memperbaiki komputer');
-        $this->train('komplain', 'bisa memperbaiki lcd');
-        $this->train('komplain', 'komputernya tidak bisa hidup');
-        $this->train('komplain', 'kapan dibenerin kipasnya');
-        $this->train('komplain', 'kapan dibenerin komputernya');
-        $result = $this->classify('apakah bapak sudah bisa memperbaiki komputer saya?');
-        dd($result) ;
+        $data = \App\TrainingData::whereNotNull('hasilPrediksi')->get();
+        //dd($data);
+        foreach($data as $b){
+          $this->train($b->hasilPrediksi,$b->words);
+        }
+        $result = "ok";
+        $result = $this->classify('bagaimana cara perwalian untuk semester baru','2');
+        $data = \App\TrainingData::create(['words' => $result['words'] , 'keysword' => $result['keysword'] , 'tiket_id' => $result['tiket_id'], 'hasilPrediksi' => $result['hasilPrediksi'] ]);
+        foreach ($result['dataHasil'] as $c) {
+            \App\TrainingHasil::create(['keys'=> $c['keys'], 'values' => $c['values'], 'training_data_id' => $data->id]);
+        }
         $fromDate = Carbon::now()->startOfMonth();
         $tillDate = Carbon::now()->endOfMonth();
 
