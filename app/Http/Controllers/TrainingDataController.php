@@ -29,7 +29,7 @@ class TrainingDataController extends Controller
     }
     function __construct()
     {
-        $this->middleware('permission:bayes-list');
+        //$this->middleware('permission:bayes-list');
         $this->middleware('permission:bayes-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:bayes-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:bayes-delete', ['only' => ['destroy']]);
