@@ -41,9 +41,11 @@ Route::group(['middleware' => [ 'web', 'auth']], function () {
     Route::prefix('/admin/ajax/master/')->group(function () {
         Route::get('users', 'UserController@getDataMaster')->name('ajax.master.users');
         Route::get('bayes', 'TrainingDataController@json')->name('tableBayes');
+        Route::get('bayes/delete', 'TrainingDataController@destroy')->name('deleteBayes');
         Route::post('users', 'UserController@create')->name('ajax.master.users');
         Route::put('users', 'UserController@update')->name('ajax.master.users');
         Route::delete('users', 'UserController@update')->name('ajax.master.users');
         Route::get('roles', 'RoleController@show')->name('ajax.master.roles');
     });
+    
 });

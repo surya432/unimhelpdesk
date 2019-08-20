@@ -44,6 +44,7 @@
 @stop
 @section('js')
 <script type="text/javascript">
+    var urlAjax = '{{route("deleteBayes")}}'
     $(document).ready(function() {
         $('#table').DataTable({
             processing: true,
@@ -65,6 +66,7 @@
 
             ]
         });
+
     });
 </script>
 @stop

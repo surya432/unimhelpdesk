@@ -151,6 +151,7 @@
                 url: urlAjax,
                 data: $(this).serializeArray(),
                 success: function(data) {
+                    $("#table").DataTable().ajax.reload(null, false);
                     generateNotif(data.msg, method, data.status);
                 },
                 error: function(data) {
@@ -166,7 +167,7 @@
     </script>
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
     <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
-    
+
 </body>
 
 </html>

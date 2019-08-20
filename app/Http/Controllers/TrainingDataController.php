@@ -6,7 +6,7 @@ use App\TrainingData;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Contracts\DataTable;
 use DataTables;
-
+use DB;
 class TrainingDataController extends Controller
 {
     /**
@@ -20,10 +20,7 @@ class TrainingDataController extends Controller
         return DataTables::of($data)
             // ->rawColumns(['keys', 'value'])
             ->addColumn('action', function ($query) {
-                return '<a href="' . route("bayes.edit", $query->id) .
-                    '" class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-edit"></i> Edit</a>' .
-                    '<a href="' . route("bayes.show", $query->id) .
-                    '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-eye-open"></i> Show</a>' .
+                return 
                     '<Button data-id="' . $query->id . '" id="btnDelete" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> delete</Button>';
             })
             ->rawColumns(['nama', 'action'])
@@ -32,10 +29,10 @@ class TrainingDataController extends Controller
     }
     function __construct()
     {
-        $this->middleware('permission:tiket-list');
-        $this->middleware('permission:tiket-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:tiket-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:tiket-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:bayes-list');
+        $this->middleware('permission:bayes-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:bayes-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:bayes-delete', ['only' => ['destroy']]);
     }
     public function index()
     {
@@ -106,8 +103,11 @@ class TrainingDataController extends Controller
      * @param  \App\TrainingData  $trainingData
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TrainingData $trainingData)
+    public function destroy(Request $request )
     {
         //
+        $data = \App\TrainingData::where('id', $request->input('id'))->first();
+        $data->delete();
+        return response()->json("delete Berhasil", 200);
     }
 }

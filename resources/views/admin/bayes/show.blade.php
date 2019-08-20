@@ -13,7 +13,7 @@
             <h2> Show Services</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('services.index') }}"> Back</a>
+            <a class="btn btn-primary" href="{{ route('bayes.index') }}"> Back</a>
         </div>
     </div>
 </div>
@@ -26,7 +26,7 @@
             {{ $Services->name }}
         </div>
     </div>
-   
+
 </div>
 
 @stop
@@ -55,6 +55,7 @@
                 }
             ],
         });
+        
         $("#btnAdd").on("click", function() {
             $('#formModal')[0].reset();
             $("input[type='hidden']").val("");

@@ -136,7 +136,18 @@ class TiketController extends Controller
                 \App\Attachment::create(["name" => $name, "file" => "attachment/$name", "mime" =>  $mime, "content_tiket_id" => $content->id]);
             }
         }
-
+        $this->reset();
+        $data = \App\TrainingData::whereNotNull('hasilPrediksi')->get();
+        //dd($data);
+        foreach ($data as $b) {
+            $this->train($b->hasilPrediksi, $b->words);
+        }
+        $result = "ok";
+        $result = $this->classify($request->input('body'), $content->id);
+        $data = \App\TrainingData::create(['words' => $result['words'], 'keysword' => $result['keysword'], 'tiket_id' => $result['tiket_id'], 'hasilPrediksi' => $result['hasilPrediksi']]);
+        foreach ($result['dataHasil'] as $c) {
+            \App\TrainingHasil::create(['keys' => $c['keys'], 'values' => $c['values'], 'training_data_id' => $data->id]);
+        }
         return response()->json(["status" => "success", 'msg' => "Created Sukses"], 200);
     }
     public function replyTiket(Request $request)
