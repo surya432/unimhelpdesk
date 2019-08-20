@@ -128,7 +128,6 @@ return [
             'text' => 'Bayes',
             'url'  => 'admin/page/bayes',
             'icon' => 'database',
-            'can' => 'bayes-list',
 
         ], 
         [
