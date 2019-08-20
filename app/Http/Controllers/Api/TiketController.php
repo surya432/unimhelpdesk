@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 class TiketController extends Controller
 {
     //
+    use HelperController;
 
     public function getMaster(Request $request)
     {

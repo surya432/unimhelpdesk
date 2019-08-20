@@ -27,6 +27,7 @@ class TiketController extends Controller
         $this->middleware('permission:tiket-delete', ['only' => ['destroy']]);
     }
 
+    use HelperController;
 
     /**
      * Display a listing of the resource.
