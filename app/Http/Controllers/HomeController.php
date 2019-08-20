@@ -26,7 +26,6 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    use HelperController;
 
     public function index()
     {
