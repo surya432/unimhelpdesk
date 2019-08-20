@@ -46,6 +46,9 @@
 <script type="text/javascript">
     var urlAjax = '{{route("deleteBayes")}}'
     $(document).ready(function() {
+        $("#formModal").on("submit", function() {
+            event.preventDefault()
+        });
         $('#table').DataTable({
             processing: true,
             serverSide: true,

@@ -31,6 +31,11 @@
 
 {!! Form::open(array('route' => 'tiket.store','method'=>'POST','files'=> true)) !!}
 {{Form::hidden('senders', Auth::user()->name, array('id' => 'senders')) }}
+@if (Auth::user()->hasRole("User"))
+{{Form::hidden('repply', 0, array('id' => 'repply')) }}
+@else
+{{Form::hidden('repply', 1, array('id' => 'repply')) }}
+@endif
 
 <div class="row">
     <div class="col-lg-12">
