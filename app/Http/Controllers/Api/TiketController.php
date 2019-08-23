@@ -10,6 +10,7 @@ class TiketController extends Controller
 {
     //
     use App\Http\Controllers\Http\HelperController;
+    
     public function getMaster(Request $request)
     {
         $data = $request->input('TableName');
