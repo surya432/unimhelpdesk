@@ -6,11 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 
-class TiketController extends Controller
+class TiketController extends Controller 
 {
+    use \App\Http\Controllers\Http\HelperController;
     //
-    use App\Http\Controllers\Http\HelperController;
-    
     public function getMaster(Request $request)
     {
         $data = $request->input('TableName');
