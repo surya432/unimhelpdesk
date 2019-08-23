@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Role;
 class TiketController extends Controller
 {
     //
-    use App\Http\Controllers\HttpHelperController;
+    use App\Http\Controllers\Http\HelperController;
     public function getMaster(Request $request)
     {
         $data = $request->input('TableName');
